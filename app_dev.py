@@ -6,12 +6,29 @@ from airtable import Airtable
 data_airtable = Airtable('appBsLc1OGVqdyvmx', 'data', api_key='patYKIypdUwOIHfnZ.9f46b6ae621f442b8a7be503fd4572b48bba4c4acec46ad2263cba6c6d0baef3')
 answers_airtable = Airtable('appBsLc1OGVqdyvmx', 'answers', api_key='patYKIypdUwOIHfnZ.9f46b6ae621f442b8a7be503fd4572b48bba4c4acec46ad2263cba6c6d0baef3')
 
-# Read data from Airtable into pandas DataFrame
+columns = ['Name', 'Photo', 'Fight', 'Question', 'Answer', 'Points']  # List of all your columns
 data_records = data_airtable.get_all()
-answers_records = answers_airtable.get_all()
+data_records_fields = [record['fields'] for record in data_records]
 
-data = pd.DataFrame([record['fields'] for record in data_records])
-answers = pd.DataFrame([record['fields'] for record in answers_records])
+# Adding missing columns with None value
+for record_fields in data_records_fields:
+    for column in columns:
+        if column not in record_fields:
+            record_fields[column] = None
+
+data = pd.DataFrame(data_records_fields, columns=columns)
+
+answers_records = answers_airtable.get_all()
+answers_records_fields = [record['fields'] for record in answers_records]
+
+# Assuming you also want to do the same for answers DataFrame
+answers_columns = ['Fight', 'Question', 'Correct Answer', 'Points']  # Update with your actual column names
+for record_fields in answers_records_fields:
+    for column in answers_columns:
+        if column not in record_fields:
+            record_fields[column] = None
+
+answers = pd.DataFrame(answers_records_fields, columns=answers_columns)
 
 st.text("Columns in data DataFrame:")
 st.write(data.columns.tolist()) 
