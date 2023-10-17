@@ -30,12 +30,6 @@ for record_fields in answers_records_fields:
 
 answers = pd.DataFrame(answers_records_fields, columns=answers_columns)
 
-st.text("Columns in data DataFrame:")
-st.write(data.columns.tolist()) 
-
-st.text("Columns in answers DataFrame:")
-st.write(answers.columns.tolist())
-
 # Questions and options
 fights_questions = {
     "Islam Makhachev vs Alexander Volkanovski": {
