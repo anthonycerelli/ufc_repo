@@ -13,6 +13,12 @@ answers_records = answers_airtable.get_all()
 data = pd.DataFrame([record['fields'] for record in data_records])
 answers = pd.DataFrame([record['fields'] for record in answers_records])
 
+st.text("Columns in data DataFrame:")
+st.write(data.columns.tolist()) 
+
+st.text("Columns in answers DataFrame:")
+st.write(answers.columns.tolist())
+
 # Questions and options
 fights_questions = {
     "Islam Makhachev vs Alexander Volkanovski": {
