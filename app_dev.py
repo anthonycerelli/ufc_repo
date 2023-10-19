@@ -32,33 +32,28 @@ answers = pd.DataFrame(answers_records_fields, columns=answers_columns)
 
 # Questions and options
 fights_questions = {
-    "Islam Makhachev vs Alexander Volkanovski": {
+    "Islam Makhachev (-278) vs Alexander Volkanovski (+225)": {
         "Winner of Main Event": ["Alexander Volkanovski", "Islam Makhachev", "Draw"],
         "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
         "Round Prediction": ["Round 1", "Round 2", "Round 3", "Round 4", "Round 5", "Decision"],
     },
-    "Kamaru Usman vs Khamzat Chimaev": {
+    "Kamaru Usman (+270) vs Khamzat Chimaev (-340)": {
         "Winner of Co-Main Event": ["Kamaru Usman", "Khamzat Chimaev", "Draw"],
         "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
         "Round Prediction": ["Round 1", "Round 2", "Round 3", "Decision"],
     },
-    "Magomed Ankalaev vs Johnny Walker": {
+    "Magomed Ankalaev (-375) vs Johnny Walker (+295)": {
         "Winner": ["Magomed Ankalaev #2", "Johnny Walker #7", "Draw"],
         "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
         "Round Prediction": ["Round 1", "Round 2", "Round 3", "Decision"],
     },
-    "Ikram Aliskerov vs Warlley Alves": {
+    "Ikram Aliskerov (-650) vs Warlley Alves (+455)": {
         "Winner": ["Ikram Aliskerov", "Warlley Alves", "Draw"],
         "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
         "Round Prediction": ["Round 1", "Round 2", "Round 3", "Decision"],
     },
-    "Said Nurmagomedov vs Muin Gafurov": {
+    "Said Nurmagomedov (-218) vs Muin Gafurov (+180)": {
         "Winner": ["Said Nurmagomedov", "Muin Gafurov", "Draw"],
-        "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
-        "Round Prediction": ["Round 1", "Round 2", "Round 3", "Decision"],
-    },
-    "Tim Elliott vs Muhammad Mokaev": {
-        "Winner": ["Tim Elliott", "Muhammad Mokaev", "Draw"],
         "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
         "Round Prediction": ["Round 1", "Round 2", "Round 3", "Decision"],
     },
@@ -166,14 +161,6 @@ if name:
             "Round Prediction": ["Round 1", "Round 2", "Round 3", "Decision"],
         }
         all_answers.extend(questions_form("Said Nurmagomedov vs Muin Gafurov", fight5_questions))
-
-        # Fight 6
-        fight6_questions = {
-            "Winner": ["Tim Elliott", "Muhammad Mokaev", "Draw"],
-            "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
-            "Round Prediction": ["Round 1", "Round 2", "Round 3", "Decision"],
-        }
-        all_answers.extend(questions_form("Tim Elliott vs Muhammad Mokaev", fight6_questions))
 
         if st.button('Submit Predictions'):
             # Save user predictions to the data DataFrame and CSV file
