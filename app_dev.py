@@ -33,26 +33,31 @@ answers = pd.DataFrame(answers_records_fields, columns=answers_columns)
 # Questions and options
 fights_questions = {
     "Islam Makhachev (-278) vs Alexander Volkanovski (+225)": {
+        "image": "https://talksport.com/wp-content/uploads/sites/5/2023/02/islam-makhachev-russia-reacts-victory-795103440.jpg",
         "Winner of Main Event": ["Alexander Volkanovski", "Islam Makhachev", "Draw"],
         "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
         "Round Prediction": ["Round 1", "Round 2", "Round 3", "Round 4", "Round 5", "Decision"],
     },
     "Kamaru Usman (+270) vs Khamzat Chimaev (-340)": {
+        "image": "https://phantom-marca.unidadeditorial.es/fa3ad42ae77eb388cf89ec04d9316a0d/resize/1200/f/jpg/assets/multimedia/imagenes/2023/10/11/16970567736424.jpg",
         "Winner of Co-Main Event": ["Kamaru Usman", "Khamzat Chimaev", "Draw"],
         "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
         "Round Prediction": ["Round 1", "Round 2", "Round 3", "Decision"],
     },
     "Magomed Ankalaev (-375) vs Johnny Walker (+295)": {
+        "image": "https://mmajunkie.usatoday.com/wp-content/uploads/sites/91/2023/07/Magomed-Ankalaev-vs.-Johnny-Walker-UFC-294-split.jpg?w=1000&h=600&crop=1",
         "Winner": ["Magomed Ankalaev #2", "Johnny Walker #7", "Draw"],
         "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
         "Round Prediction": ["Round 1", "Round 2", "Round 3", "Decision"],
     },
     "Ikram Aliskerov (-650) vs Warlley Alves (+455)": {
+        "image": "https://i.ytimg.com/vi/z_kYbobkTyc/maxresdefault.jpg?sqp=-oaymwEmCIAKENAF8quKqQMa8AEB-AH-CYAC0AWKAgwIABABGH8gIygTMA8=&rs=AOn4CLDXQl63aM3t_eWcQrY0m9Q28ox56A",
         "Winner": ["Ikram Aliskerov", "Warlley Alves", "Draw"],
         "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
         "Round Prediction": ["Round 1", "Round 2", "Round 3", "Decision"],
     },
     "Said Nurmagomedov (-218) vs Muin Gafurov (+180)": {
+        "image": "https://staticg.sportskeeda.com/editor/2023/10/750f9-16974355420280-1920.jpg?w=840",
         "Winner": ["Said Nurmagomedov", "Muin Gafurov", "Draw"],
         "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
         "Round Prediction": ["Round 1", "Round 2", "Round 3", "Decision"],
@@ -112,6 +117,7 @@ if name:
         # Function to display questions for each fight
         def questions_form(fight_title, questions):
             st.subheader(fight_title)
+            st.image(fight_data["image"])
             answers = []
             for title, options in questions.items():
                 key = f"{fight_title}: {title}"
