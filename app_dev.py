@@ -115,9 +115,9 @@ if name:
     # If new user, show prediction form
     else:
         # Function to display questions for each fight
-        def questions_form(fight_title, questions):
+        def questions_form(fight_title, questions, image):
             st.subheader(fight_title)
-            st.image(fight_data["image"])
+            st.image(image)
             answers = []
             for title, options in questions.items():
                 key = f"{fight_title}: {title}"
@@ -134,7 +134,7 @@ if name:
             "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
             "Round Prediction": ["Round 1", "Round 2", "Round 3", "Round 4", "Round 5", "Decision"],
         }
-        all_answers.extend(questions_form("Islam Makhachev vs Alexander Volkanovski", fight1_questions))
+        all_answers.extend(questions_form("Islam Makhachev vs Alexander Volkanovski", fight1_questions, fights_questions[0]['image']))
 
         # Fight 2
         fight2_questions = {
@@ -142,7 +142,7 @@ if name:
             "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
             "Round Prediction": ["Round 1", "Round 2", "Round 3", "Decision"],
         }
-        all_answers.extend(questions_form("Kamaru Usman vs Khamzat Chimaev", fight2_questions))
+        all_answers.extend(questions_form("Kamaru Usman vs Khamzat Chimaev", fight2_questions, fights_questions[1]['image']))
 
         # Fight 3
         fight3_questions = {
@@ -150,7 +150,7 @@ if name:
             "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
             "Round Prediction": ["Round 1", "Round 2", "Round 3", "Decision"],
         }
-        all_answers.extend(questions_form("Magomed Ankalaev vs Johnny Walker", fight3_questions))
+        all_answers.extend(questions_form("Magomed Ankalaev vs Johnny Walker", fight3_questions, fights_questions[2]['image']))
 
         # Fight 4
         fight4_questions = {
@@ -158,7 +158,7 @@ if name:
             "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
             "Round Prediction": ["Round 1", "Round 2", "Round 3", "Decision"],
         }
-        all_answers.extend(questions_form("Ikram Aliskerov vs Warlley Alves", fight4_questions))
+        all_answers.extend(questions_form("Ikram Aliskerov vs Warlley Alves", fight4_questions, fights_questions[3]['image']))
 
         # Fight 5
         fight5_questions = {
@@ -166,7 +166,7 @@ if name:
             "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
             "Round Prediction": ["Round 1", "Round 2", "Round 3", "Decision"],
         }
-        all_answers.extend(questions_form("Said Nurmagomedov vs Muin Gafurov", fight5_questions))
+        all_answers.extend(questions_form("Said Nurmagomedov vs Muin Gafurov", fight5_questions, fights_questions[4]['image']))
 
         if st.button('Submit Predictions'):
             # Save user predictions to the data DataFrame and CSV file
