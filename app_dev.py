@@ -32,31 +32,31 @@ answers = pd.DataFrame(answers_records_fields, columns=answers_columns)
 
 # Questions and options
 fights_questions = {
-    "Islam Makhachev (-278) vs Alexander Volkanovski (+225)": {
+    "Islam Makhachev vs Alexander Volkanovski": {
         "image": "https://talksport.com/wp-content/uploads/sites/5/2023/02/islam-makhachev-russia-reacts-victory-795103440.jpg",
         "Winner of Main Event": ["Alexander Volkanovski", "Islam Makhachev", "Draw"],
         "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
         "Round Prediction": ["Round 1", "Round 2", "Round 3", "Round 4", "Round 5", "Decision"],
     },
-    "Kamaru Usman (+270) vs Khamzat Chimaev (-340)": {
+    "Kamaru Usman vs Khamzat Chimaev": {
         "image": "https://phantom-marca.unidadeditorial.es/fa3ad42ae77eb388cf89ec04d9316a0d/resize/1200/f/jpg/assets/multimedia/imagenes/2023/10/11/16970567736424.jpg",
         "Winner of Co-Main Event": ["Kamaru Usman", "Khamzat Chimaev", "Draw"],
         "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
         "Round Prediction": ["Round 1", "Round 2", "Round 3", "Decision"],
     },
-    "Magomed Ankalaev (-375) vs Johnny Walker (+295)": {
+    "Magomed Ankalaev vs Johnny Walker": {
         "image": "https://mmajunkie.usatoday.com/wp-content/uploads/sites/91/2023/07/Magomed-Ankalaev-vs.-Johnny-Walker-UFC-294-split.jpg?w=1000&h=600&crop=1",
         "Winner": ["Magomed Ankalaev #2", "Johnny Walker #7", "Draw"],
         "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
         "Round Prediction": ["Round 1", "Round 2", "Round 3", "Decision"],
     },
-    "Ikram Aliskerov (-650) vs Warlley Alves (+455)": {
+    "Ikram Aliskerov vs Warlley Alves": {
         "image": "https://i.ytimg.com/vi/z_kYbobkTyc/maxresdefault.jpg?sqp=-oaymwEmCIAKENAF8quKqQMa8AEB-AH-CYAC0AWKAgwIABABGH8gIygTMA8=&rs=AOn4CLDXQl63aM3t_eWcQrY0m9Q28ox56A",
         "Winner": ["Ikram Aliskerov", "Warlley Alves", "Draw"],
         "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
         "Round Prediction": ["Round 1", "Round 2", "Round 3", "Decision"],
     },
-    "Said Nurmagomedov (-218) vs Muin Gafurov (+180)": {
+    "Said Nurmagomedov vs Muin Gafurov": {
         "image": "https://staticg.sportskeeda.com/editor/2023/10/750f9-16974355420280-1920.jpg?w=840",
         "Winner": ["Said Nurmagomedov", "Muin Gafurov", "Draw"],
         "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
@@ -138,7 +138,7 @@ if name:
             "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
             "Round Prediction": ["Round 1", "Round 2", "Round 3", "Round 4", "Round 5", "Decision"],
         }
-        all_answers.extend(questions_form("Islam Makhachev (-278) vs Alexander Volkanovski (+225)", fight1_questions, fights_questions["Islam Makhachev (-278) vs Alexander Volkanovski (+225)"]['image']))
+        all_answers.extend(questions_form("Islam Makhachev vs Alexander Volkanovski", fight1_questions, fights_questions["Islam Makhachev vs Alexander Volkanovski"]['image']))
 
         # Fight 2
         fight2_questions = {
@@ -146,7 +146,7 @@ if name:
             "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
             "Round Prediction": ["Round 1", "Round 2", "Round 3", "Decision"],
         }
-        all_answers.extend(questions_form("Kamaru Usman (+270) vs Khamzat Chimaev (-340)", fight2_questions, fights_questions["Kamaru Usman (+270) vs Khamzat Chimaev (-340)"]['image']))
+        all_answers.extend(questions_form("Kamaru Usman vs Khamzat Chimaev", fight2_questions, fights_questions["Kamaru Usman vs Khamzat Chimaev"]['image']))
 
         # Fight 3
         fight3_questions = {
@@ -154,7 +154,7 @@ if name:
             "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
             "Round Prediction": ["Round 1", "Round 2", "Round 3", "Decision"],
         }
-        all_answers.extend(questions_form("Magomed Ankalaev (-375) vs Johnny Walker (+295)", fight3_questions, fights_questions["Magomed Ankalaev (-375) vs Johnny Walker (+295)"]['image']))
+        all_answers.extend(questions_form("Magomed Ankalaev vs Johnny Walker", fight3_questions, fights_questions["Magomed Ankalaev vs Johnny Walker"]['image']))
 
         # Fight 4
         fight4_questions = {
@@ -162,7 +162,7 @@ if name:
             "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
             "Round Prediction": ["Round 1", "Round 2", "Round 3", "Decision"],
         }
-        all_answers.extend(questions_form("Ikram Aliskerov (-650) vs Warlley Alves (+455)", fight4_questions, fights_questions["Ikram Aliskerov (-650) vs Warlley Alves (+455)"]['image']))
+        all_answers.extend(questions_form("Ikram Aliskerov vs Warlley Alves", fight4_questions, fights_questions["Ikram Aliskerov vs Warlley Alves"]['image']))
 
         # Fight 5
         fight5_questions = {
@@ -170,7 +170,7 @@ if name:
             "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
             "Round Prediction": ["Round 1", "Round 2", "Round 3", "Decision"],
         }
-        all_answers.extend(questions_form("Said Nurmagomedov (-218) vs Muin Gafurov (+180)", fight5_questions, fights_questions["Said Nurmagomedov (-218) vs Muin Gafurov (+180)"]['image']))
+        all_answers.extend(questions_form("Said Nurmagomedov vs Muin Gafurov", fight5_questions, fights_questions["Said Nurmagomedov vs Muin Gafurov"]['image']))
 
         if st.button('Submit Predictions'):
             # Save user predictions to the data DataFrame and CSV file
