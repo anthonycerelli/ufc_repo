@@ -134,7 +134,7 @@ if name:
             "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
             "Round Prediction": ["Round 1", "Round 2", "Round 3", "Round 4", "Round 5", "Decision"],
         }
-        all_answers.extend(questions_form("Islam Makhachev vs Alexander Volkanovski", fight1_questions, fights_questions[0]['image']))
+        all_answers.extend(questions_form("Islam Makhachev vs Alexander Volkanovski", fight1_questions, fights_questions["Islam Makhachev (-278) vs Alexander Volkanovski (+225)"]['image']))
 
         # Fight 2
         fight2_questions = {
@@ -142,7 +142,7 @@ if name:
             "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
             "Round Prediction": ["Round 1", "Round 2", "Round 3", "Decision"],
         }
-        all_answers.extend(questions_form("Kamaru Usman vs Khamzat Chimaev", fight2_questions, fights_questions[1]['image']))
+        all_answers.extend(questions_form("Kamaru Usman vs Khamzat Chimaev", fight2_questions, fights_questions["Kamaru Usman (+270) vs Khamzat Chimaev (-340)"]['image']))
 
         # Fight 3
         fight3_questions = {
@@ -150,7 +150,7 @@ if name:
             "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
             "Round Prediction": ["Round 1", "Round 2", "Round 3", "Decision"],
         }
-        all_answers.extend(questions_form("Magomed Ankalaev vs Johnny Walker", fight3_questions, fights_questions[2]['image']))
+        all_answers.extend(questions_form("Magomed Ankalaev vs Johnny Walker", fight3_questions, fights_questions["Magomed Ankalaev (-375) vs Johnny Walker (+295)"]['image']))
 
         # Fight 4
         fight4_questions = {
@@ -158,7 +158,7 @@ if name:
             "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
             "Round Prediction": ["Round 1", "Round 2", "Round 3", "Decision"],
         }
-        all_answers.extend(questions_form("Ikram Aliskerov vs Warlley Alves", fight4_questions, fights_questions[3]['image']))
+        all_answers.extend(questions_form("Ikram Aliskerov vs Warlley Alves", fight4_questions, fights_questions["Ikram Aliskerov (-650) vs Warlley Alves (+455)"]['image']))
 
         # Fight 5
         fight5_questions = {
@@ -166,7 +166,7 @@ if name:
             "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
             "Round Prediction": ["Round 1", "Round 2", "Round 3", "Decision"],
         }
-        all_answers.extend(questions_form("Said Nurmagomedov vs Muin Gafurov", fight5_questions, fights_questions[4]['image']))
+        all_answers.extend(questions_form("Said Nurmagomedov vs Muin Gafurov", fight5_questions, fights_questions["Said Nurmagomedov (-218) vs Muin Gafurov (+180)"]['image']))
 
         if st.button('Submit Predictions'):
             # Save user predictions to the data DataFrame and CSV file
