@@ -32,39 +32,39 @@ answers = pd.DataFrame(answers_records_fields, columns=answers_columns)
 
 # Questions and options
 fights_questions = {
-    "Islam Makhachev vs Alexander Volkanovski": {
-        "image": "https://talksport.com/wp-content/uploads/sites/5/2023/02/islam-makhachev-russia-reacts-victory-795103440.jpg",
-        "Winner of Main Event": ["Alexander Volkanovski", "Islam Makhachev", "Draw"],
+    "Jiří Procházka vs Alex Pereira": {
+        "image": "https://dmxg5wxfqgb4u.cloudfront.net/styles/background_image_sm/s3/2023-10/102723-hero-main-event-spotlight-pereira-prochazka.jpg?h=d1cb525d&itok=lN0fhLFW",
+        "Winner of Main Event": ["Jiří Procházka", "Alex Pereira", "Draw"],
         "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
         "Round Prediction": ["Round 1", "Round 2", "Round 3", "Round 4", "Round 5", "Decision"],
     },
-    "Kamaru Usman vs Khamzat Chimaev": {
-        "image": "https://phantom-marca.unidadeditorial.es/fa3ad42ae77eb388cf89ec04d9316a0d/resize/1200/f/jpg/assets/multimedia/imagenes/2023/10/11/16970567736424.jpg",
-        "Winner of Co-Main Event": ["Kamaru Usman", "Khamzat Chimaev", "Draw"],
+    "Sergei Pavlovich vs Tom Aspinall": {
+        "image": "https://dmxg5wxfqgb4u.cloudfront.net/styles/background_image_sm/s3/2023-11/110323-hero-aspinall-pavlovich-by-the-numbers.jpg?h=d1cb525d&itok=5Z_qOxa8",
+        "Winner of Co-Main Event": ["Sergei Pavlovich", "Tom Aspinall", "Draw"],
         "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
         "Round Prediction": ["Round 1", "Round 2", "Round 3", "Decision"],
     },
-    "Magomed Ankalaev vs Johnny Walker": {
-        "image": "https://mmajunkie.usatoday.com/wp-content/uploads/sites/91/2023/07/Magomed-Ankalaev-vs.-Johnny-Walker-UFC-294-split.jpg?w=1000&h=600&crop=1",
-        "Winner": ["Magomed Ankalaev #2", "Johnny Walker #7", "Draw"],
+    "Jéssica Andrade vs Mackenzie Dern": {
+        "image": "https://mmajunkie.usatoday.com/wp-content/uploads/sites/91/2023/08/Mackenzie-Dern-vs.-Jessica-Andrade-UFC-295-combo-split.jpg?w=1000&h=576&crop=1",
+        "Winner": ["Jéssica Andrade", "Mackenzie Dern", "Draw"],
         "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
         "Round Prediction": ["Round 1", "Round 2", "Round 3", "Decision"],
     },
-    "Ikram Aliskerov vs Warlley Alves": {
-        "image": "https://i.ytimg.com/vi/z_kYbobkTyc/maxresdefault.jpg?sqp=-oaymwEmCIAKENAF8quKqQMa8AEB-AH-CYAC0AWKAgwIABABGH8gIygTMA8=&rs=AOn4CLDXQl63aM3t_eWcQrY0m9Q28ox56A",
-        "Winner": ["Ikram Aliskerov", "Warlley Alves", "Draw"],
+    "Matt Frevola vs Benoit Saint-Denis": {
+        "image": "https://mmajunkie.usatoday.com/wp-content/uploads/sites/91/2023/09/matt-frevola-benoit-saint-denis-ufc-295.png?w=1000&h=562&crop=1",
+        "Winner": ["Matt Frevola", "Benoit Saint-Denis", "Draw"],
         "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
         "Round Prediction": ["Round 1", "Round 2", "Round 3", "Decision"],
     },
-    "Said Nurmagomedov vs Muin Gafurov": {
-        "image": "https://staticg.sportskeeda.com/editor/2023/10/750f9-16974355420280-1920.jpg?w=840",
-        "Winner": ["Said Nurmagomedov", "Muin Gafurov", "Draw"],
+    "Diego Lopes vs Pat Sabatini": {
+        "image": "https://cdn.vox-cdn.com/thumbor/mK2tQUPR8LzaLVJXtifd7m2P6wk=/0x0:3255x2232/1200x0/filters:focal(0x0:3255x2232):no_upscale()/cdn.vox-cdn.com/uploads/chorus_asset/file/25063041/1595299476.jpg",
+        "Winner": ["Diego Lopes", "Pat Sabatini", "Draw"],
         "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
         "Round Prediction": ["Round 1", "Round 2", "Round 3", "Decision"],
     },
 }
 
-st.title('UFC 294 Live Competition Dashboard')
+st.title('UFC 295 Live Competition Dashboard')
 
 # Admin interface for updating correct answers
 if st.checkbox('Admin Interface'):
@@ -134,43 +134,43 @@ if name:
 
         # Fight 1
         fight1_questions = {
-            "Winner of Main Event": ["Alexander Volkanovski", "Islam Makhachev", "Draw"],
+            "Winner of Main Event": ["Jiří Procházka", "Alex Pereira", "Draw"],
             "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
             "Round Prediction": ["Round 1", "Round 2", "Round 3", "Round 4", "Round 5", "Decision"],
         }
-        all_answers.extend(questions_form("Islam Makhachev vs Alexander Volkanovski", fight1_questions, fights_questions["Islam Makhachev vs Alexander Volkanovski"]['image']))
+        all_answers.extend(questions_form("Jiří Procházka vs Alex Pereira", fight1_questions, fights_questions["Jiří Procházka vs Alex Pereira"]['image']))
 
         # Fight 2
         fight2_questions = {
-            "Winner of Co-Main Event": ["Kamaru Usman", "Khamzat Chimaev", "Draw"],
+            "Winner of Co-Main Event": ["Sergei Pavlovich", "Tom Aspinall", "Draw"],
             "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
             "Round Prediction": ["Round 1", "Round 2", "Round 3", "Decision"],
         }
-        all_answers.extend(questions_form("Kamaru Usman vs Khamzat Chimaev", fight2_questions, fights_questions["Kamaru Usman vs Khamzat Chimaev"]['image']))
+        all_answers.extend(questions_form("Sergei Pavlovich vs Tom Aspinall", fight2_questions, fights_questions["Sergei Pavlovich vs Tom Aspinall"]['image']))
 
         # Fight 3
         fight3_questions = {
-            "Winner": ["Magomed Ankalaev #2", "Johnny Walker #7", "Draw"],
+            "Winner": ["Jéssica Andrade", "Mackenzie Dern", "Draw"],
             "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
             "Round Prediction": ["Round 1", "Round 2", "Round 3", "Decision"],
         }
-        all_answers.extend(questions_form("Magomed Ankalaev vs Johnny Walker", fight3_questions, fights_questions["Magomed Ankalaev vs Johnny Walker"]['image']))
+        all_answers.extend(questions_form("Jéssica Andrade vs Mackenzie Dern", fight3_questions, fights_questions["Jéssica Andrade vs Mackenzie Dern"]['image']))
 
         # Fight 4
         fight4_questions = {
-            "Winner": ["Ikram Aliskerov", "Warlley Alves", "Draw"],
+            "Winner": ["Matt Frevola", "Benoit Saint-Denis", "Draw"],
             "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
             "Round Prediction": ["Round 1", "Round 2", "Round 3", "Decision"],
         }
-        all_answers.extend(questions_form("Ikram Aliskerov vs Warlley Alves", fight4_questions, fights_questions["Ikram Aliskerov vs Warlley Alves"]['image']))
+        all_answers.extend(questions_form("Matt Frevola vs Benoit Saint-Denis", fight4_questions, fights_questions["Matt Frevola vs Benoit Saint-Denis"]['image']))
 
         # Fight 5
         fight5_questions = {
-            "Winner": ["Said Nurmagomedov", "Muin Gafurov", "Draw"],
+            "Winner": ["Diego Lopes", "Pat Sabatini", "Draw"],
             "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
             "Round Prediction": ["Round 1", "Round 2", "Round 3", "Decision"],
         }
-        all_answers.extend(questions_form("Said Nurmagomedov vs Muin Gafurov", fight5_questions, fights_questions["Said Nurmagomedov vs Muin Gafurov"]['image']))
+        all_answers.extend(questions_form("Diego Lopes vs Pat Sabatini", fight5_questions, fights_questions["Diego Lopes vs Pat Sabatini"]['image']))
 
         if st.button('Submit Predictions'):
             # Save user predictions to the data DataFrame and CSV file
