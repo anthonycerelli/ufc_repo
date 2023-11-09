@@ -3,9 +3,34 @@ import pandas as pd
 import plotly.express as px
 from airtable import Airtable
 
+# Define a function to fetch and return data from Airtable
+def fetch_data(airtable_instance, columns):
+    records = airtable_instance.get_all()
+    records_fields = [record['fields'] for record in records]
+    
+    # Adding missing columns with None value
+    for record_fields in records_fields:
+        for column in columns:
+            if column not in record_fields:
+                record_fields[column] = None
+    
+    return pd.DataFrame(records_fields, columns=columns)
+
+# Define a function to fetch and return player points
+def get_player_points(data):
+    return data.groupby('Name')['Points'].sum().reset_index()
+
+# Airtable connection details
+airtable_details = {
+    'app_id': 'appBsLc1OGVqdyvmx',
+    'data_table': 'data',
+    'answers_table': 'answers',
+    'api_key': 'patYKIypdUwOIHfnZ.9f46b6ae621f442b8a7be503fd4572b48bba4c4acec46ad2263cba6c6d0baef3'
+}
+
 # Connect to Airtable
-data_airtable = Airtable('appBsLc1OGVqdyvmx', 'data', api_key='patYKIypdUwOIHfnZ.9f46b6ae621f442b8a7be503fd4572b48bba4c4acec46ad2263cba6c6d0baef3')
-answers_airtable = Airtable('appBsLc1OGVqdyvmx', 'answers', api_key='patYKIypdUwOIHfnZ.9f46b6ae621f442b8a7be503fd4572b48bba4c4acec46ad2263cba6c6d0baef3')
+data_airtable = Airtable(airtable_details['app_id'], airtable_details['data_table'], api_key=airtable_details['api_key'])
+answers_airtable = Airtable(airtable_details['app_id'], airtable_details['answers_table'], api_key=airtable_details['api_key'])
 
 columns = ['Name', 'Photo', 'Fight', 'Question', 'Answer', 'Points']  # List of all your columns
 data_records = data_airtable.get_all()
@@ -207,7 +232,9 @@ if name:
 # Show all predictions and answers (optional, for testing)
 if st.checkbox('Show all players and their total points'):
     st.write('Players Points:')
-    players_points = data.groupby('Name')['Points'].sum().reset_index()  # Grouping data by name and summing points
+    columns = ['Name', 'Points'] 
+    data = fetch_data(data_airtable, columns)
+    players_points = get_player_points(data)
 
     # Sort the DataFrame by Points in descending order for better ranking
     players_points_sorted = players_points.sort_values(by='Points', ascending=False)
