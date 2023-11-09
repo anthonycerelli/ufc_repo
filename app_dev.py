@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import plotly.express as px
 from airtable import Airtable
 
 # Connect to Airtable
@@ -189,4 +190,19 @@ if name:
 if st.checkbox('Show all players and their total points'):
     st.write('Players Points:')
     players_points = data.groupby('Name')['Points'].sum().reset_index()  # Grouping data by name and summing points
-    st.write(players_points)
+
+    # Sort the DataFrame by Points in descending order for better ranking
+    players_points_sorted = players_points.sort_values(by='Points', ascending=False)
+
+    # Create a bar chart using plotly
+    fig = px.bar(players_points_sorted, x='Name', y='Points',
+                 title='Player Rankings',
+                 labels={'Points': 'Total Points'}, color='Points',
+                 color_continuous_scale=px.colors.sequential.Viridis)
+
+    # Improve the layout of the chart
+    fig.update_layout(showlegend=False)
+    fig.update_xaxes(tickangle=-45)
+
+    # Render the plotly chart in the Streamlit app
+    st.plotly_chart(fig, use_container_width=True)
