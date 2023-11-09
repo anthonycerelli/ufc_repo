@@ -67,6 +67,14 @@ fights_questions = {
 
 st.title('UFC 295 Live Competition Dashboard')
 
+# Explanation of the points system
+st.markdown("""
+#### Points System
+- **Winner Prediction**: Correctly predicting the winner of a fight earns you **1 point**.
+- **Method of Victory Prediction**: Correctly predicting the method of victory earns you **2 points**.
+- **Round Prediction**: Correctly predicting the round earns you **2 points** for 3-round fights. For 5-round fights, this prediction will earn you **3 points** if correct.
+""")
+
 # Admin interface for updating correct answers
 if st.checkbox('Admin Interface'):
     password = st.text_input("Enter Password", type='password')
@@ -126,8 +134,18 @@ if name:
             answers = []
             for title, options in questions.items():
                 key = f"{fight_title}: {title}"
-                answer = st.selectbox(title, options, key=key)
-                answers.append((fight_title, title, answer))
+                if title == 'Method of Victory':
+                    method = st.selectbox(title, options, key=key)
+                    answers.append((fight_title, title, method))
+                    # Automatically assign "Decision" round if method of victory is "Decision"
+                    if method == 'Decision':
+                        answers.append((fight_title, 'Round Prediction', 'Decision'))
+                    else:
+                        round_prediction = st.selectbox('Round Prediction', questions['Round Prediction'], key=key+'_round')
+                        answers.append((fight_title, 'Round Prediction', round_prediction))
+                elif title != 'Round Prediction':  # Skip round prediction if already handled
+                    answer = st.selectbox(title, options, key=key)
+                    answers.append((fight_title, title, answer))
             return answers
 
         # Collect user predictions for each fight
