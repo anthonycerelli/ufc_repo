@@ -68,7 +68,7 @@ fights_questions = {
         "image": "https://dmxg5wxfqgb4u.cloudfront.net/styles/background_image_sm/s3/2023-11/110323-hero-aspinall-pavlovich-by-the-numbers.jpg?h=d1cb525d&itok=5Z_qOxa8",
         "Winner of Co-Main Event": ["Sergei Pavlovich", "Tom Aspinall", "Draw"],
         "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
-        "Round Prediction": ["Round 1", "Round 2", "Round 3"],
+        "Round Prediction": ["Round 1", "Round 2", "Round 3", "Round 4", "Round 5"],
     },
     "Jéssica Andrade vs Mackenzie Dern": {
         "image": "https://mmajunkie.usatoday.com/wp-content/uploads/sites/91/2023/08/Mackenzie-Dern-vs.-Jessica-Andrade-UFC-295-combo-split.jpg?w=1000&h=576&crop=1",
@@ -188,7 +188,7 @@ if name:
         fight2_questions = {
             "Winner of Co-Main Event": ["Sergei Pavlovich", "Tom Aspinall", "Draw"],
             "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
-            "Round Prediction": ["Round 1", "Round 2", "Round 3", "Decision"],
+            "Round Prediction": ["Round 1", "Round 2", "Round 3", "Round 4", "Round 5", "Decision"],
         }
         all_answers.extend(questions_form("Sergei Pavlovich vs Tom Aspinall", fight2_questions, fights_questions["Sergei Pavlovich vs Tom Aspinall"]['image']))
 
