@@ -180,7 +180,7 @@ if name:
         fight1_questions = {
             "Winner of Main Event": ["Jiří Procházka", "Alex Pereira", "Draw"],
             "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
-            "Round Prediction": ["Round 1", "Round 2", "Round 3", "Round 4", "Round 5", "Decision"],
+            "Round Prediction": ["Round 1", "Round 2", "Round 3", "Round 4", "Round 5"],
         }
         all_answers.extend(questions_form("Jiří Procházka vs Alex Pereira", fight1_questions, fights_questions["Jiří Procházka vs Alex Pereira"]['image']))
 
@@ -188,7 +188,7 @@ if name:
         fight2_questions = {
             "Winner of Co-Main Event": ["Sergei Pavlovich", "Tom Aspinall", "Draw"],
             "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
-            "Round Prediction": ["Round 1", "Round 2", "Round 3", "Round 4", "Round 5", "Decision"],
+            "Round Prediction": ["Round 1", "Round 2", "Round 3", "Round 4", "Round 5"],
         }
         all_answers.extend(questions_form("Sergei Pavlovich vs Tom Aspinall", fight2_questions, fights_questions["Sergei Pavlovich vs Tom Aspinall"]['image']))
 
@@ -196,7 +196,7 @@ if name:
         fight3_questions = {
             "Winner": ["Jéssica Andrade", "Mackenzie Dern", "Draw"],
             "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
-            "Round Prediction": ["Round 1", "Round 2", "Round 3", "Decision"],
+            "Round Prediction": ["Round 1", "Round 2", "Round 3"],
         }
         all_answers.extend(questions_form("Jéssica Andrade vs Mackenzie Dern", fight3_questions, fights_questions["Jéssica Andrade vs Mackenzie Dern"]['image']))
 
@@ -204,7 +204,7 @@ if name:
         fight4_questions = {
             "Winner": ["Matt Frevola", "Benoit Saint-Denis", "Draw"],
             "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
-            "Round Prediction": ["Round 1", "Round 2", "Round 3", "Decision"],
+            "Round Prediction": ["Round 1", "Round 2", "Round 3"],
         }
         all_answers.extend(questions_form("Matt Frevola vs Benoit Saint-Denis", fight4_questions, fights_questions["Matt Frevola vs Benoit Saint-Denis"]['image']))
 
@@ -212,7 +212,7 @@ if name:
         fight5_questions = {
             "Winner": ["Diego Lopes", "Pat Sabatini", "Draw"],
             "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
-            "Round Prediction": ["Round 1", "Round 2", "Round 3", "Decision"],
+            "Round Prediction": ["Round 1", "Round 2", "Round 3"],
         }
         all_answers.extend(questions_form("Diego Lopes vs Pat Sabatini", fight5_questions, fights_questions["Diego Lopes vs Pat Sabatini"]['image']))
 
