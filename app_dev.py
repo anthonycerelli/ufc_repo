@@ -244,25 +244,37 @@ if name:
                 total_points = data[data['Name'] == name]['Points'].sum()
                 st.write(f"Your total points: {total_points}")
 
-# Show all predictions and answers (optional, for testing)
+# Update the section where you render the chart
 if st.checkbox('Show all players and their total points'):
     st.write('Players Points:')
+    
+    # Fetch data and sort
     columns = ['Name', 'Points'] 
     data = fetch_data(data_airtable, columns)
     players_points = get_player_points(data)
-
-    # Sort the DataFrame by Points in descending order for better ranking
     players_points_sorted = players_points.sort_values(by='Points', ascending=False)
 
-    # Create a bar chart using plotly
+    # Create a bar chart using plotly with improved aesthetics
     fig = px.bar(players_points_sorted, x='Name', y='Points',
                  title='Player Rankings',
-                 labels={'Points': 'Total Points'}, color='Points',
-                 color_continuous_scale=px.colors.sequential.Viridis)
+                 labels={'Points': 'Total Points'},
+                 color='Points',
+                 color_continuous_scale=px.colors.sequential.Plasma) # Updated color scheme
 
-    # Improve the layout of the chart
-    fig.update_layout(showlegend=False)
+    # Enhance layout
+    fig.update_layout(
+        plot_bgcolor='rgba(0, 0, 0, 0)', # Transparent background
+        xaxis_title="",
+        yaxis_title="Total Points",
+        showlegend=False
+    )
     fig.update_xaxes(tickangle=-45)
 
-    # Render the plotly chart in the Streamlit app
-    st.plotly_chart(fig, use_container_width=True)
+    # Toggle for Live Mode
+    live_mode = st.checkbox('Live Mode')
+    if live_mode:
+        fig.update_layout(autosize=True, height=600)  # Larger chart for live mode
+        fig.update_traces(hoverinfo='all', hoverlabel=dict(bgcolor="white", font_size=16, font_family="Rockwell"))
+        st.plotly_chart(fig, use_container_width=True)
+    else:
+        st.plotly_chart(fig, use_container_width=True)
