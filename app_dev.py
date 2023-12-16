@@ -71,31 +71,31 @@ answers = pd.DataFrame(answers_records_fields, columns=answers_columns)
 # Questions and options
 fights_questions = {
     "Leon Edwards vs Colby Covington": {
-        "image": "https://dmxg5wxfqgb4u.cloudfront.net/styles/background_image_sm/s3/2023-10/102723-hero-main-event-spotlight-pereira-prochazka.jpg?h=d1cb525d&itok=lN0fhLFW",
+        "image": "https://cdn.vox-cdn.com/thumbor/dD02U2Q-ICHoFJZfcJ8C7G02LYg=/0x0:4482x3135/1200x800/filters:focal(1722x0:2438x716)/cdn.vox-cdn.com/uploads/chorus_image/image/72968836/1858548737.0.jpg",
         "Winner of Main Event": ["Leon Edwards", "Colby Covington", "Draw"],
         "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
         "Round Prediction": ["Round 1", "Round 2", "Round 3", "Round 4", "Round 5"],
     },
     "Alexandre Pantoja vs Brandon Royval": {
-        "image": "https://dmxg5wxfqgb4u.cloudfront.net/styles/background_image_sm/s3/2023-11/110323-hero-aspinall-pavlovich-by-the-numbers.jpg?h=d1cb525d&itok=5Z_qOxa8",
+        "image": "https://www.bjpenn.com/wp-content/uploads/2023/12/Alexandre-Pantoja-Brandon-Royval-1.jpg",
         "Winner of Co-Main Event": ["Alexandre Pantoja", "Brandon Royval", "Draw"],
         "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
         "Round Prediction": ["Round 1", "Round 2", "Round 3", "Round 4", "Round 5"],
     },
     "Shavkat Rakhmonov vs Stephen Thompson": {
-        "image": "https://mmajunkie.usatoday.com/wp-content/uploads/sites/91/2023/08/Mackenzie-Dern-vs.-Jessica-Andrade-UFC-295-combo-split.jpg?w=1000&h=576&crop=1",
+        "image": "https://mmajunkie.usatoday.com/wp-content/uploads/sites/91/2023/12/ufc-296-Shavkat-vs-Wonderboy.jpg?w=1000&h=600&crop=1",
         "Winner": ["Shavkat Rakhmonov", "Stephen Thompson", "Draw"],
         "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
         "Round Prediction": ["Round 1", "Round 2", "Round 3"],
     },
     "Tony Ferguson vs Paddy Pimblett": {
-        "image": "https://mmajunkie.usatoday.com/wp-content/uploads/sites/91/2023/09/matt-frevola-benoit-saint-denis-ufc-295.png?w=1000&h=562&crop=1",
+        "image": "https://talksport.com/wp-content/uploads/sites/5/2023/03/l-r-opponents-tony-ferguson-866363622.jpg",
         "Winner": ["Tony Ferguson", "Paddy Pimblett", "Draw"],
         "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
         "Round Prediction": ["Round 1", "Round 2", "Round 3"],
     },
     "Josh Emmett vs Bryce Mitchell": {
-        "image": "https://cdn.vox-cdn.com/thumbor/mK2tQUPR8LzaLVJXtifd7m2P6wk=/0x0:3255x2232/1200x0/filters:focal(0x0:3255x2232):no_upscale()/cdn.vox-cdn.com/uploads/chorus_asset/file/25063041/1595299476.jpg",
+        "image": "https://static.wixstatic.com/media/668b59_8bd46ad49b17409db7f3a755f015abe2~mv2.jpg/v1/fill/w_640,h_360,al_c,q_80,usm_0.66_1.00_0.01,enc_auto/668b59_8bd46ad49b17409db7f3a755f015abe2~mv2.jpg",
         "Winner": ["Josh Emmett", "Bryce Mitchell", "Draw"],
         "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
         "Round Prediction": ["Round 1", "Round 2", "Round 3"],
