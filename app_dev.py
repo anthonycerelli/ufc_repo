@@ -20,6 +20,18 @@ def fetch_data(airtable_instance, columns):
 def get_player_points(data):
     return data.groupby('Name')['Points'].sum().reset_index()
 
+def fetch_betting_odds(fight_title):
+    # This function should fetch betting odds from your data source.
+    # For demonstration, I'm returning dummy data. Replace this with your actual data fetching logic.
+    odds = {
+        "Leon Edwards vs Colby Covington": "Leon Edwards (-145) favourite",
+        "Alexandre Pantoja vs Brandon Royval": "Alexandre Pantoja (-217) favourite",
+        "Shavkat Rakhmonov vs Stephen Thompson": "Shavkat Rakhmonov (-465) favourite",
+        "Tony Ferguson vs Paddy Pimblett": "Paddy Pimblett (-310) favourite",
+        "Josh Emmett vs Bryce Mitchell": "Bryce Mitchell (-200) favourite"
+    }
+    return odds.get(fight_title, "Odds not available")
+
 # Airtable connection details
 airtable_details = {
     'app_id': 'appBsLc1OGVqdyvmx',
@@ -58,33 +70,33 @@ answers = pd.DataFrame(answers_records_fields, columns=answers_columns)
 
 # Questions and options
 fights_questions = {
-    "Jiří Procházka vs Alex Pereira": {
+    "Leon Edwards vs Colby Covington": {
         "image": "https://dmxg5wxfqgb4u.cloudfront.net/styles/background_image_sm/s3/2023-10/102723-hero-main-event-spotlight-pereira-prochazka.jpg?h=d1cb525d&itok=lN0fhLFW",
-        "Winner of Main Event": ["Jiří Procházka", "Alex Pereira", "Draw"],
+        "Winner of Main Event": ["Leon Edwards", "Colby Covington", "Draw"],
         "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
         "Round Prediction": ["Round 1", "Round 2", "Round 3", "Round 4", "Round 5"],
     },
-    "Sergei Pavlovich vs Tom Aspinall": {
+    "Alexandre Pantoja vs Brandon Royval": {
         "image": "https://dmxg5wxfqgb4u.cloudfront.net/styles/background_image_sm/s3/2023-11/110323-hero-aspinall-pavlovich-by-the-numbers.jpg?h=d1cb525d&itok=5Z_qOxa8",
-        "Winner of Co-Main Event": ["Sergei Pavlovich", "Tom Aspinall", "Draw"],
+        "Winner of Co-Main Event": ["Alexandre Pantoja", "Brandon Royval", "Draw"],
         "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
         "Round Prediction": ["Round 1", "Round 2", "Round 3", "Round 4", "Round 5"],
     },
-    "Jéssica Andrade vs Mackenzie Dern": {
+    "Shavkat Rakhmonov vs Stephen Thompson": {
         "image": "https://mmajunkie.usatoday.com/wp-content/uploads/sites/91/2023/08/Mackenzie-Dern-vs.-Jessica-Andrade-UFC-295-combo-split.jpg?w=1000&h=576&crop=1",
-        "Winner": ["Jéssica Andrade", "Mackenzie Dern", "Draw"],
+        "Winner": ["Shavkat Rakhmonov", "Stephen Thompson", "Draw"],
         "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
         "Round Prediction": ["Round 1", "Round 2", "Round 3"],
     },
-    "Matt Frevola vs Benoit Saint-Denis": {
+    "Tony Ferguson vs Paddy Pimblett": {
         "image": "https://mmajunkie.usatoday.com/wp-content/uploads/sites/91/2023/09/matt-frevola-benoit-saint-denis-ufc-295.png?w=1000&h=562&crop=1",
-        "Winner": ["Matt Frevola", "Benoit Saint-Denis", "Draw"],
+        "Winner": ["Tony Ferguson", "Paddy Pimblett", "Draw"],
         "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
         "Round Prediction": ["Round 1", "Round 2", "Round 3"],
     },
-    "Diego Lopes vs Pat Sabatini": {
+    "Josh Emmett vs Bryce Mitchell": {
         "image": "https://cdn.vox-cdn.com/thumbor/mK2tQUPR8LzaLVJXtifd7m2P6wk=/0x0:3255x2232/1200x0/filters:focal(0x0:3255x2232):no_upscale()/cdn.vox-cdn.com/uploads/chorus_asset/file/25063041/1595299476.jpg",
-        "Winner": ["Diego Lopes", "Pat Sabatini", "Draw"],
+        "Winner": ["Josh Emmett", "Bryce Mitchell", "Draw"],
         "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
         "Round Prediction": ["Round 1", "Round 2", "Round 3"],
     },
@@ -156,6 +168,9 @@ if name:
         def questions_form(fight_title, questions, image):
             st.subheader(fight_title)
             st.image(image)
+            # Fetch and display betting odds
+            odds = fetch_betting_odds(fight_title)
+            st.markdown(f"**Betting Odds:** {odds}")
             answers = []
             for title, options in questions.items():
                 key = f"{fight_title}: {title}"
@@ -178,43 +193,43 @@ if name:
 
         # Fight 1
         fight1_questions = {
-            "Winner of Main Event": ["Jiří Procházka", "Alex Pereira", "Draw"],
+            "Winner of Main Event": ["Leon Edwards", "Colby Covington", "Draw"],
             "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
             "Round Prediction": ["Round 1", "Round 2", "Round 3", "Round 4", "Round 5"],
         }
-        all_answers.extend(questions_form("Jiří Procházka vs Alex Pereira", fight1_questions, fights_questions["Jiří Procházka vs Alex Pereira"]['image']))
+        all_answers.extend(questions_form("Leon Edwards vs Colby Covington", fight1_questions, fights_questions["Leon Edwards vs Colby Covington"]['image']))
 
         # Fight 2
         fight2_questions = {
-            "Winner of Co-Main Event": ["Sergei Pavlovich", "Tom Aspinall", "Draw"],
+            "Winner of Co-Main Event": ["Alexandre Pantoja", "Brandon Royval", "Draw"],
             "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
             "Round Prediction": ["Round 1", "Round 2", "Round 3", "Round 4", "Round 5"],
         }
-        all_answers.extend(questions_form("Sergei Pavlovich vs Tom Aspinall", fight2_questions, fights_questions["Sergei Pavlovich vs Tom Aspinall"]['image']))
+        all_answers.extend(questions_form("Alexandre Pantoja vs Brandon Royval", fight2_questions, fights_questions["Alexandre Pantoja vs Brandon Royval"]['image']))
 
         # Fight 3
         fight3_questions = {
-            "Winner": ["Jéssica Andrade", "Mackenzie Dern", "Draw"],
+            "Winner": ["Shavkat Rakhmonov", "Stephen Thompson", "Draw"],
             "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
             "Round Prediction": ["Round 1", "Round 2", "Round 3"],
         }
-        all_answers.extend(questions_form("Jéssica Andrade vs Mackenzie Dern", fight3_questions, fights_questions["Jéssica Andrade vs Mackenzie Dern"]['image']))
+        all_answers.extend(questions_form("Shavkat Rakhmonov vs Stephen Thompson", fight3_questions, fights_questions["Shavkat Rakhmonov vs Stephen Thompson"]['image']))
 
         # Fight 4
         fight4_questions = {
-            "Winner": ["Matt Frevola", "Benoit Saint-Denis", "Draw"],
+            "Winner": ["Tony Ferguson", "Paddy Pimblett", "Draw"],
             "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
             "Round Prediction": ["Round 1", "Round 2", "Round 3"],
         }
-        all_answers.extend(questions_form("Matt Frevola vs Benoit Saint-Denis", fight4_questions, fights_questions["Matt Frevola vs Benoit Saint-Denis"]['image']))
+        all_answers.extend(questions_form("Tony Ferguson vs Paddy Pimblett", fight4_questions, fights_questions["Tony Ferguson vs Paddy Pimblett"]['image']))
 
         # Fight 5
         fight5_questions = {
-            "Winner": ["Diego Lopes", "Pat Sabatini", "Draw"],
+            "Winner": ["Josh Emmett", "Bryce Mitchell", "Draw"],
             "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
             "Round Prediction": ["Round 1", "Round 2", "Round 3"],
         }
-        all_answers.extend(questions_form("Diego Lopes vs Pat Sabatini", fight5_questions, fights_questions["Diego Lopes vs Pat Sabatini"]['image']))
+        all_answers.extend(questions_form("Josh Emmett vs Bryce Mitchell", fight5_questions, fights_questions["Josh Emmett vs Bryce Mitchell"]['image']))
 
         if st.button('Submit Predictions'):
             # Save user predictions to the data DataFrame and CSV file
