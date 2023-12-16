@@ -102,7 +102,10 @@ fights_questions = {
     },
 }
 
-st.title('UFC 295 Live Competition Dashboard')
+st.title('UFC 296 Live Competition Dashboard')
+
+# Toggle for Live Mode
+live_mode = st.checkbox('Live Mode')
 
 # Explanation of the points system
 st.markdown("""
@@ -111,6 +114,38 @@ st.markdown("""
 - **Method of Victory Prediction**: Correctly predicting the method of victory earns you **2 points**.
 - **Round Prediction**: Correctly predicting the round earns you **2 points** for 3-round fights. For 5-round fights, this prediction will earn you **3 points** if correct.
 """)
+
+if live_mode: 
+    # Fetch data and sort
+    columns = ['Name', 'Points'] 
+    data = fetch_data(data_airtable, columns)
+    players_points = get_player_points(data)
+    players_points_sorted = players_points.sort_values(by='Points', ascending=False)
+
+    # Create a bar chart using plotly with improved aesthetics
+    fig = px.bar(players_points_sorted, x='Name', y='Points',
+                 title='Player Rankings',
+                 labels={'Points': 'Total Points'},
+                 color='Points',
+                 color_continuous_scale=px.colors.sequential.Plasma) # Updated color scheme
+
+    # Enhance layout
+    fig.update_layout(
+        plot_bgcolor='rgba(0, 0, 0, 0)', # Transparent background
+        xaxis_title="",
+        yaxis_title="Total Points",
+        showlegend=False
+    )
+    fig.update_xaxes(tickangle=-45)
+
+    # Toggle for Live Mode
+    live_mode = st.checkbox('Live Mode')
+    if live_mode:
+        fig.update_layout(autosize=True, height=600)  # Larger chart for live mode
+        fig.update_traces(hoverinfo='all', hoverlabel=dict(bgcolor="white", font_size=16, font_family="Rockwell"))
+        st.plotly_chart(fig, use_container_width=True)
+    else:
+        st.plotly_chart(fig, use_container_width=True)
 
 # Admin interface for updating correct answers
 if st.checkbox('Admin Interface'):
@@ -151,130 +186,97 @@ if st.checkbox('Admin Interface'):
     else:
         st.error('Wrong password')
 
-# User registration or login
-name = st.text_input('Enter your name to log in or register:')
-
-if name:
-    st.write(f"Welcome {name}!")
-
-    # If user is registered, show their predictions and score (you can add a real score calculation later)
-    if name in data['Name'].values:
-        user_data = data[data['Name'] == name]
-        st.table(user_data[['Fight', 'Question', 'Answer']])
-
-    # If new user, show prediction form
-    else:
-        # Function to display questions for each fight
-        def questions_form(fight_title, questions, image):
-            st.subheader(fight_title)
-            st.image(image)
-            # Fetch and display betting odds
-            odds = fetch_betting_odds(fight_title)
-            st.markdown(f"**Betting Odds:** {odds}")
-            answers = []
-            for title, options in questions.items():
-                key = f"{fight_title}: {title}"
-                if title == 'Method of Victory':
-                    method = st.selectbox(title, options, key=key)
-                    answers.append((fight_title, title, method))
-                    # Automatically assign "Decision" round if method of victory is "Decision"
-                    if method == 'Decision':
-                        answers.append((fight_title, 'Round Prediction', 'Decision'))
-                    else:
-                        round_prediction = st.selectbox('Round Prediction', questions['Round Prediction'], key=key+'_round')
-                        answers.append((fight_title, 'Round Prediction', round_prediction))
-                elif title != 'Round Prediction':  # Skip round prediction if already handled
-                    answer = st.selectbox(title, options, key=key)
-                    answers.append((fight_title, title, answer))
-            return answers
-
-        # Collect user predictions for each fight
-        all_answers = []
-
-        # Fight 1
-        fight1_questions = {
-            "Winner of Main Event": ["Leon Edwards", "Colby Covington", "Draw"],
-            "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
-            "Round Prediction": ["Round 1", "Round 2", "Round 3", "Round 4", "Round 5"],
-        }
-        all_answers.extend(questions_form("Leon Edwards vs Colby Covington", fight1_questions, fights_questions["Leon Edwards vs Colby Covington"]['image']))
-
-        # Fight 2
-        fight2_questions = {
-            "Winner of Co-Main Event": ["Alexandre Pantoja", "Brandon Royval", "Draw"],
-            "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
-            "Round Prediction": ["Round 1", "Round 2", "Round 3", "Round 4", "Round 5"],
-        }
-        all_answers.extend(questions_form("Alexandre Pantoja vs Brandon Royval", fight2_questions, fights_questions["Alexandre Pantoja vs Brandon Royval"]['image']))
-
-        # Fight 3
-        fight3_questions = {
-            "Winner": ["Shavkat Rakhmonov", "Stephen Thompson", "Draw"],
-            "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
-            "Round Prediction": ["Round 1", "Round 2", "Round 3"],
-        }
-        all_answers.extend(questions_form("Shavkat Rakhmonov vs Stephen Thompson", fight3_questions, fights_questions["Shavkat Rakhmonov vs Stephen Thompson"]['image']))
-
-        # Fight 4
-        fight4_questions = {
-            "Winner": ["Tony Ferguson", "Paddy Pimblett", "Draw"],
-            "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
-            "Round Prediction": ["Round 1", "Round 2", "Round 3"],
-        }
-        all_answers.extend(questions_form("Tony Ferguson vs Paddy Pimblett", fight4_questions, fights_questions["Tony Ferguson vs Paddy Pimblett"]['image']))
-
-        # Fight 5
-        fight5_questions = {
-            "Winner": ["Josh Emmett", "Bryce Mitchell", "Draw"],
-            "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
-            "Round Prediction": ["Round 1", "Round 2", "Round 3"],
-        }
-        all_answers.extend(questions_form("Josh Emmett vs Bryce Mitchell", fight5_questions, fights_questions["Josh Emmett vs Bryce Mitchell"]['image']))
-
-        if st.button('Submit Predictions'):
-            # Save user predictions to the data DataFrame and CSV file
-            for fight, question, answer in all_answers:
-                record = {'Name': name, 'Photo': 'photo_path_here', 'Fight': fight, 'Question': question, 'Answer': answer, 'Points': 0.0}
-                data = data.append(record, ignore_index=True)
-                data_airtable.insert(record)
-            st.success('Predictions submitted!')
-
-        # Display user's total points
-        if name in data['Name'].values:
-                total_points = data[data['Name'] == name]['Points'].sum()
-                st.write(f"Your total points: {total_points}")
-
-# Update the section where you render the chart
-if st.checkbox('Show all players and their total points'):
-    st.write('Players Points:')
+if not live_mode:
     
-    # Fetch data and sort
-    columns = ['Name', 'Points'] 
-    data = fetch_data(data_airtable, columns)
-    players_points = get_player_points(data)
-    players_points_sorted = players_points.sort_values(by='Points', ascending=False)
-
-    # Create a bar chart using plotly with improved aesthetics
-    fig = px.bar(players_points_sorted, x='Name', y='Points',
-                 title='Player Rankings',
-                 labels={'Points': 'Total Points'},
-                 color='Points',
-                 color_continuous_scale=px.colors.sequential.Plasma) # Updated color scheme
-
-    # Enhance layout
-    fig.update_layout(
-        plot_bgcolor='rgba(0, 0, 0, 0)', # Transparent background
-        xaxis_title="",
-        yaxis_title="Total Points",
-        showlegend=False
-    )
-    fig.update_xaxes(tickangle=-45)
-
-    # Toggle for Live Mode
-    live_mode = st.checkbox('Live Mode')
-    if live_mode:
-        fig.update_layout(autosize=True, height=600)  # Larger chart for live mode
-        fig.update_traces(hoverinfo='all', hoverlabel=dict(bgcolor="white", font_size=16, font_family="Rockwell"))
-        st.plotly_chart(fig, use_container_width=True)
-    else:
-        st.plotly_chart(fig, use_container_width=True)
+    # User registration or login
+    name = st.text_input('Enter your name to log in or register:')
+    
+    if name:
+        st.write(f"Welcome {name}!")
+    
+        # If user is registered, show their predictions and score (you can add a real score calculation later)
+        if name in data['Name'].values:
+            user_data = data[data['Name'] == name]
+            st.table(user_data[['Fight', 'Question', 'Answer']])
+    
+        # If new user, show prediction form
+        else:
+            # Function to display questions for each fight
+            def questions_form(fight_title, questions, image):
+                st.subheader(fight_title)
+                st.image(image)
+                # Fetch and display betting odds
+                odds = fetch_betting_odds(fight_title)
+                st.markdown(f"**Betting Odds:** {odds}")
+                answers = []
+                for title, options in questions.items():
+                    key = f"{fight_title}: {title}"
+                    if title == 'Method of Victory':
+                        method = st.selectbox(title, options, key=key)
+                        answers.append((fight_title, title, method))
+                        # Automatically assign "Decision" round if method of victory is "Decision"
+                        if method == 'Decision':
+                            answers.append((fight_title, 'Round Prediction', 'Decision'))
+                        else:
+                            round_prediction = st.selectbox('Round Prediction', questions['Round Prediction'], key=key+'_round')
+                            answers.append((fight_title, 'Round Prediction', round_prediction))
+                    elif title != 'Round Prediction':  # Skip round prediction if already handled
+                        answer = st.selectbox(title, options, key=key)
+                        answers.append((fight_title, title, answer))
+                return answers
+    
+            # Collect user predictions for each fight
+            all_answers = []
+    
+            # Fight 1
+            fight1_questions = {
+                "Winner of Main Event": ["Leon Edwards", "Colby Covington", "Draw"],
+                "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
+                "Round Prediction": ["Round 1", "Round 2", "Round 3", "Round 4", "Round 5"],
+            }
+            all_answers.extend(questions_form("Leon Edwards vs Colby Covington", fight1_questions, fights_questions["Leon Edwards vs Colby Covington"]['image']))
+    
+            # Fight 2
+            fight2_questions = {
+                "Winner of Co-Main Event": ["Alexandre Pantoja", "Brandon Royval", "Draw"],
+                "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
+                "Round Prediction": ["Round 1", "Round 2", "Round 3", "Round 4", "Round 5"],
+            }
+            all_answers.extend(questions_form("Alexandre Pantoja vs Brandon Royval", fight2_questions, fights_questions["Alexandre Pantoja vs Brandon Royval"]['image']))
+    
+            # Fight 3
+            fight3_questions = {
+                "Winner": ["Shavkat Rakhmonov", "Stephen Thompson", "Draw"],
+                "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
+                "Round Prediction": ["Round 1", "Round 2", "Round 3"],
+            }
+            all_answers.extend(questions_form("Shavkat Rakhmonov vs Stephen Thompson", fight3_questions, fights_questions["Shavkat Rakhmonov vs Stephen Thompson"]['image']))
+    
+            # Fight 4
+            fight4_questions = {
+                "Winner": ["Tony Ferguson", "Paddy Pimblett", "Draw"],
+                "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
+                "Round Prediction": ["Round 1", "Round 2", "Round 3"],
+            }
+            all_answers.extend(questions_form("Tony Ferguson vs Paddy Pimblett", fight4_questions, fights_questions["Tony Ferguson vs Paddy Pimblett"]['image']))
+    
+            # Fight 5
+            fight5_questions = {
+                "Winner": ["Josh Emmett", "Bryce Mitchell", "Draw"],
+                "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
+                "Round Prediction": ["Round 1", "Round 2", "Round 3"],
+            }
+            all_answers.extend(questions_form("Josh Emmett vs Bryce Mitchell", fight5_questions, fights_questions["Josh Emmett vs Bryce Mitchell"]['image']))
+    
+            if st.button('Submit Predictions'):
+                # Save user predictions to the data DataFrame and CSV file
+                for fight, question, answer in all_answers:
+                    record = {'Name': name, 'Photo': 'photo_path_here', 'Fight': fight, 'Question': question, 'Answer': answer, 'Points': 0.0}
+                    data = data.append(record, ignore_index=True)
+                    data_airtable.insert(record)
+                st.success('Predictions submitted!')
+    
+            # Display user's total points
+            if name in data['Name'].values:
+                    total_points = data[data['Name'] == name]['Points'].sum()
+                    st.write(f"Your total points: {total_points}")
