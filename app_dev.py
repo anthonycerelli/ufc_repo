@@ -137,15 +137,10 @@ if live_mode:
         showlegend=False
     )
     fig.update_xaxes(tickangle=-45)
+    fig.update_layout(autosize=True, height=600)  # Larger chart for live mode
+    fig.update_traces(hoverinfo='all', hoverlabel=dict(bgcolor="white", font_size=16, font_family="Rockwell"))
+    st.plotly_chart(fig, use_container_width=True)
 
-    # Toggle for Live Mode
-    live_mode = st.checkbox('Live Mode')
-    if live_mode:
-        fig.update_layout(autosize=True, height=600)  # Larger chart for live mode
-        fig.update_traces(hoverinfo='all', hoverlabel=dict(bgcolor="white", font_size=16, font_family="Rockwell"))
-        st.plotly_chart(fig, use_container_width=True)
-    else:
-        st.plotly_chart(fig, use_container_width=True)
 
 # Admin interface for updating correct answers
 if st.checkbox('Admin Interface'):
