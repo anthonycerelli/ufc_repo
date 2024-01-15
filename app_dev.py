@@ -25,11 +25,11 @@ def fetch_betting_odds(fight_title):
     # This function should fetch betting odds from your data source.
     # For demonstration, I'm returning dummy data. Replace this with your actual data fetching logic.
     odds = {
-        "Leon Edwards vs Colby Covington": "Leon Edwards (-145) favourite",
-        "Alexandre Pantoja vs Brandon Royval": "Alexandre Pantoja (-217) favourite",
-        "Shavkat Rakhmonov vs Stephen Thompson": "Shavkat Rakhmonov (-465) favourite",
-        "Tony Ferguson vs Paddy Pimblett": "Paddy Pimblett (-310) favourite",
-        "Josh Emmett vs Bryce Mitchell": "Bryce Mitchell (-200) favourite"
+        "Sean Strickland vs Dricus Du Plessis": "Sean Strickland (-130) favourite",
+        "Raquel Pennington vs Mayra Bueno Silva": "Mayra Bueno Silva (-166) favourite",
+        "Neil Magny vs Mike Malott": "Mike Malott (-250) favourite",
+        "Chris Curtis vs Marc-André Barriault": "Chris Curtis (-166) favourite",
+        "Arnold Allen vs Movsar Evloev": "Movsar Evloev (-166) favourite"
     }
     return odds.get(fight_title, "Odds not available")
 
@@ -71,39 +71,50 @@ answers = pd.DataFrame(answers_records_fields, columns=answers_columns)
 
 # Questions and options
 fights_questions = {
-    "Leon Edwards vs Colby Covington": {
+    "Sean Strickland vs Dricus Du Plessis": {
         "image": "https://cdn.vox-cdn.com/thumbor/dD02U2Q-ICHoFJZfcJ8C7G02LYg=/0x0:4482x3135/1200x800/filters:focal(1722x0:2438x716)/cdn.vox-cdn.com/uploads/chorus_image/image/72968836/1858548737.0.jpg",
-        "Winner of Main Event": ["Leon Edwards", "Colby Covington", "Draw"],
+        "fighter_1_image": "https://dmxg5wxfqgb4u.cloudfront.net/styles/athlete_bio_full_body/s3/2023-09/STRICKLAND_SEAN_L_BELTMOCK.png?itok=QLnBsSSa",
+        "fighter_2_image": "https://dmxg5wxfqgb4u.cloudfront.net/styles/athlete_bio_full_body/s3/2023-07/DU_PLESSUS_DRICUS_L_07-08.png?itok=o3g5Swus",
+        "Winner of Main Event": ["Sean Strickland", "Dricus Du Plessis", "Draw"],
         "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
         "Round Prediction": ["Round 1", "Round 2", "Round 3", "Round 4", "Round 5"],
     },
-    "Alexandre Pantoja vs Brandon Royval": {
+    "Raquel Pennington vs Mayra Bueno Silva": {
         "image": "https://www.bjpenn.com/wp-content/uploads/2023/12/Alexandre-Pantoja-Brandon-Royval-1.jpg",
-        "Winner of Co-Main Event": ["Alexandre Pantoja", "Brandon Royval", "Draw"],
+        "fighter_1_image": "",
+        "fighter_2_image": "",
+        "Winner of Co-Main Event": ["Raquel Pennington", "Mayra Bueno Silva", "Draw"],
         "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
         "Round Prediction": ["Round 1", "Round 2", "Round 3", "Round 4", "Round 5"],
     },
-    "Shavkat Rakhmonov vs Stephen Thompson": {
+    "Neil Magny vs Mike Malott": {
         "image": "https://mmajunkie.usatoday.com/wp-content/uploads/sites/91/2023/12/ufc-296-Shavkat-vs-Wonderboy.jpg?w=1000&h=600&crop=1",
-        "Winner": ["Shavkat Rakhmonov", "Stephen Thompson", "Draw"],
+        "fighter_1_image": "",
+        "fighter_2_image": "",
+        "Winner": ["Neil Magny", "Mike Malott", "Draw"],
         "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
         "Round Prediction": ["Round 1", "Round 2", "Round 3"],
     },
-    "Tony Ferguson vs Paddy Pimblett": {
+    "Chris Curtis vs Marc-André Barriault": {
         "image": "https://talksport.com/wp-content/uploads/sites/5/2023/03/l-r-opponents-tony-ferguson-866363622.jpg",
-        "Winner": ["Tony Ferguson", "Paddy Pimblett", "Draw"],
+        "fighter_1_image": "",
+        "fighter_2_image": "",
+        "Winner": ["Chris Curtis", "Marc-André Barriault", "Draw"],
         "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
         "Round Prediction": ["Round 1", "Round 2", "Round 3"],
     },
-    "Josh Emmett vs Bryce Mitchell": {
+    "Arnold Allen vs Movsar Evloev": {
         "image": "https://static.wixstatic.com/media/668b59_8bd46ad49b17409db7f3a755f015abe2~mv2.jpg/v1/fill/w_640,h_360,al_c,q_80,usm_0.66_1.00_0.01,enc_auto/668b59_8bd46ad49b17409db7f3a755f015abe2~mv2.jpg",
-        "Winner": ["Josh Emmett", "Bryce Mitchell", "Draw"],
+        "fighter_1_image": "",
+        "fighter_2_image": "",
+        "Winner": ["Arnold Allen", "Movsar Evloev", "Draw"],
         "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
         "Round Prediction": ["Round 1", "Round 2", "Round 3"],
     },
 }
 
-st.title('UFC 297 Live Competition Dashboard')
+st. set_page_config(layout="wide") 
+st.title('UFC 297 -- "Fantasy" Championship')
 
 # Explanation of the points system
 st.markdown("""
@@ -194,43 +205,43 @@ if name:
 
         # Fight 1
         fight1_questions = {
-            "Winner of Main Event": ["Leon Edwards", "Colby Covington", "Draw"],
+            "Winner of Main Event": ["Sean Strickland", "Dricus Du Plessis", "Draw"],
             "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
             "Round Prediction": ["Round 1", "Round 2", "Round 3", "Round 4", "Round 5"],
         }
-        all_answers.extend(questions_form("Leon Edwards vs Colby Covington", fight1_questions, fights_questions["Leon Edwards vs Colby Covington"]['image']))
+        all_answers.extend(questions_form("Sean Strickland vs Dricus Du Plessis", fight1_questions, fights_questions["Sean Strickland vs Dricus Du Plessis"]['image']))
 
         # Fight 2
         fight2_questions = {
-            "Winner of Co-Main Event": ["Alexandre Pantoja", "Brandon Royval", "Draw"],
+            "Winner of Co-Main Event": ["Raquel Pennington", "Mayra Bueno Silva", "Draw"],
             "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
             "Round Prediction": ["Round 1", "Round 2", "Round 3", "Round 4", "Round 5"],
         }
-        all_answers.extend(questions_form("Alexandre Pantoja vs Brandon Royval", fight2_questions, fights_questions["Alexandre Pantoja vs Brandon Royval"]['image']))
+        all_answers.extend(questions_form("Raquel Pennington vs Mayra Bueno Silva", fight2_questions, fights_questions["Raquel Pennington vs Mayra Bueno Silva"]['image']))
 
         # Fight 3
         fight3_questions = {
-            "Winner": ["Shavkat Rakhmonov", "Stephen Thompson", "Draw"],
+            "Winner": ["Neil Magny", "Mike Malott", "Draw"],
             "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
             "Round Prediction": ["Round 1", "Round 2", "Round 3"],
         }
-        all_answers.extend(questions_form("Shavkat Rakhmonov vs Stephen Thompson", fight3_questions, fights_questions["Shavkat Rakhmonov vs Stephen Thompson"]['image']))
+        all_answers.extend(questions_form("Neil Magny vs Mike Malott", fight3_questions, fights_questions["Neil Magny vs Mike Malott"]['image']))
 
         # Fight 4
         fight4_questions = {
-            "Winner": ["Tony Ferguson", "Paddy Pimblett", "Draw"],
+            "Winner": ["Chris Curtis", "Marc-André Barriault", "Draw"],
             "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
             "Round Prediction": ["Round 1", "Round 2", "Round 3"],
         }
-        all_answers.extend(questions_form("Tony Ferguson vs Paddy Pimblett", fight4_questions, fights_questions["Tony Ferguson vs Paddy Pimblett"]['image']))
+        all_answers.extend(questions_form("Chris Curtis vs Marc-André Barriault", fight4_questions, fights_questions["Chris Curtis vs Marc-André Barriault"]['image']))
 
         # Fight 5
         fight5_questions = {
-            "Winner": ["Josh Emmett", "Bryce Mitchell", "Draw"],
+            "Winner": ["Arnold Allen", "Movsar Evloev", "Draw"],
             "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
             "Round Prediction": ["Round 1", "Round 2", "Round 3"],
         }
-        all_answers.extend(questions_form("Josh Emmett vs Bryce Mitchell", fight5_questions, fights_questions["Josh Emmett vs Bryce Mitchell"]['image']))
+        all_answers.extend(questions_form("Arnold Allen vs Movsar Evloev", fight5_questions, fights_questions["Arnold Allen vs Movsar Evloev"]['image']))
 
         if st.button('Submit Predictions'):
             # Save user predictions to the data DataFrame and CSV file
