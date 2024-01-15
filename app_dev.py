@@ -1,3 +1,4 @@
+import os
 import streamlit as st
 import pandas as pd
 import plotly.express as px
@@ -32,12 +33,12 @@ def fetch_betting_odds(fight_title):
     }
     return odds.get(fight_title, "Odds not available")
 
-# Airtable connection details
+# Get airtable parameters
 airtable_details = {
-    'app_id': 'appBsLc1OGVqdyvmx',
+    'app_id': os.environ.get('AIRTABLE_APP_ID'),
     'data_table': 'data',
     'answers_table': 'answers',
-    'api_key': 'patYKIypdUwOIHfnZ.9f46b6ae621f442b8a7be503fd4572b48bba4c4acec46ad2263cba6c6d0baef3'
+    'api_key': os.environ.get('AIRTABLE_API_KEY')
 }
 
 # Connect to Airtable
@@ -102,7 +103,7 @@ fights_questions = {
     },
 }
 
-st.title('UFC 295 Live Competition Dashboard')
+st.title('UFC 297 Live Competition Dashboard')
 
 # Explanation of the points system
 st.markdown("""
