@@ -174,7 +174,7 @@ st.set_page_config(layout="wide")
 #     else:
 #         st.error('Wrong password')
 
-def main_app()
+def main_app():
     st.title('UFC 297 -- "Fantasy" Championship')
     # Explanation of the points system
     st.markdown("""
