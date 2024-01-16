@@ -124,13 +124,19 @@ if 'logged_in' not in st.session_state:
 
 # Function to verify login credentials
 def check_credentials(username, password, airtable=login_airtable):
-    # Example credentials, replace with your actual user data
     users = airtable.get_all()
-    hashed_password = bcrypt.hashpw("password".encode('utf-8'), os.environ.get('SALT_VALUE'))
+
+    # Convert the input password to bytes
+    password_bytes = password.encode('utf-8')
 
     for user in users:
-        if user['fields'].get('username') == username and user['fields'].get('password') == hashed_password:
-            return True
+        stored_password = user['fields'].get('password')
+        if user['fields'].get('username') == username:
+            # Convert the stored password to bytes
+            stored_password_bytes = stored_password.encode('utf-8')
+            # Check if the hashed input password matches the stored hashed password
+            if bcrypt.checkpw(password_bytes, stored_password_bytes):
+                return True
     return False
 
 st.set_page_config(layout="wide") 
@@ -313,8 +319,9 @@ def main_app():
 
 # Function to hash password
 def hash_password(password):
-    salt = os.environ.get('SALT_VALUE').encode()
-    return bcrypt.hashpw(password.encode(), salt)
+    # Generate a salt and hash the password
+    hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+    return hashed_password
 
 # Function to add new user to Airtable
 def add_user(username, hashed_password, airtable):
