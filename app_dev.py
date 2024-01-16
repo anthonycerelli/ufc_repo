@@ -318,7 +318,7 @@ def hash_password(password):
 
 # Function to add new user to Airtable
 def add_user(username, hashed_password, airtable):
-    airtable.insert({'Username': username, 'Password': hashed_password.decode()})
+    airtable.insert({'username': username, 'password': hashed_password.decode()})
 
 def login_page(login_airtable=login_airtable):
     st.title("Login / Sign Up")
