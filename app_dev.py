@@ -321,27 +321,44 @@ def add_user(username, hashed_password, airtable):
     airtable.insert({'username': username, 'password': hashed_password.decode()})
 
 def login_page(login_airtable=login_airtable):
-    st.title("Login / Sign Up")
-    username = st.text_input("Username")
-    password = st.text_input("Password", type='password')
+    st.title("Login / Sign Up", anchor=None)
 
-    if st.button('Login'):
-        if check_credentials(username, password):
-            st.session_state['logged_in'] = True
-            st.experimental_rerun()
-        else:
-            st.error("Incorrect username or password")
+    with st.form("Login Form"):
+        username = st.text_input("Username", placeholder="Enter your username")
+        password = st.text_input("Password", type='password', placeholder="Enter your password")
 
-    if st.button('Sign Up'):
-        # Hash the password
-        hashed_password = hash_password(password)
-        
-        # Add the new user to Airtable
-        add_user(username, hashed_password, login_airtable)
-        
-        # Log the user in after signing up
-        st.session_state['logged_in'] = True
-        st.experimental_rerun()
+        # Function to validate inputs
+        def inputs_are_valid(username, password):
+            if not username or not password:
+                st.error("Username and password cannot be blank.")
+                return False
+            return True
+
+        # Layout for buttons
+        col1, col2 = st.columns(2)
+        with col1:
+            submit_login = st.form_submit_button('Login')
+        with col2:
+            submit_signup = st.form_submit_button('Sign Up')
+
+        if submit_login:
+            if inputs_are_valid(username, password) and check_credentials(username, password):
+                st.session_state['logged_in'] = True
+                st.experimental_rerun()
+            elif not check_credentials(username, password):
+                st.error("Incorrect username or password")
+
+        if submit_signup:
+            if inputs_are_valid(username, password):
+                # Hash the password
+                hashed_password = hash_password(password)
+                
+                # Add the new user to Airtable
+                add_user(username, hashed_password, login_airtable)
+                
+                # Log the user in after signing up
+                st.session_state['logged_in'] = True
+                st.experimental_rerun()
 
 # Main script execution
 if st.session_state['logged_in']:
