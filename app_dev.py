@@ -47,8 +47,8 @@ airtable_details = {
 # Connect to Airtable
 data_airtable = Airtable(airtable_details['app_id'], airtable_details['data_table'], api_key=airtable_details['api_key'])
 answers_airtable = Airtable(airtable_details['app_id'], airtable_details['answers_table'], api_key=airtable_details['api_key'])
-historical_data_airtable = Airtable(airtable_details['historical_data_table'], airtable_details['answers_table'], api_key=airtable_details['api_key'])
-login_airtable = Airtable(airtable_details['login_table'], airtable_details['answers_table'], api_key=airtable_details['api_key'])
+historical_data_airtable = Airtable(airtable_details['app_id'], airtable_details['historical_data_table'], api_key=airtable_details['api_key'])
+login_airtable = Airtable(airtable_details['app_id'], airtable_details['login_table'], api_key=airtable_details['api_key'])
 
 columns = ['Name', 'Photo', 'Fight', 'Question', 'Answer', 'Points']  # List of all your columns
 data_records = data_airtable.get_all()
