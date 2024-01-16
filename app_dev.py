@@ -123,7 +123,7 @@ if 'logged_in' not in st.session_state:
     st.session_state['logged_in'] = False
 
 # Function to verify login credentials
-def check_credentials(username, password):
+def check_credentials(username, password, airtable=login_airtable):
     # Example credentials, replace with your actual user data
     users = airtable.get_all()
     hashed_password = bcrypt.hashpw("password".encode('utf-8'), os.environ.get('SALT_VALUE'))
