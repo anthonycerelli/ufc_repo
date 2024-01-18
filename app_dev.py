@@ -1,9 +1,12 @@
+# Package imports
 import os
 import streamlit as st
 import pandas as pd
 import plotly.express as px
 from airtable import Airtable
 import bcrypt
+import cloudinary
+import cloudinary.uploader
 
 # Define a function to fetch and return data from Airtable
 def fetch_data(airtable_instance, columns):
@@ -43,6 +46,13 @@ airtable_details = {
     'login_table': 'login_credentials',
     'historical_data_table':'historical_data'
 }
+
+# Configuring Cloudinary
+cloudinary.config(
+  cloud_name = os.environ.get('CLOUD_NAME'),
+  api_key = os.environ.get('CLOUD_API_KEY'), 
+  api_secret = os.environ.get('CLOUD_SECRET')
+)
 
 # Connect to Airtable
 data_airtable = Airtable(airtable_details['app_id'], airtable_details['data_table'], api_key=airtable_details['api_key'])
@@ -180,7 +190,18 @@ st.set_page_config(layout="wide")
 #     else:
 #         st.error('Wrong password')
 
-def main_app():
+# Upload function for cloudinary
+def upload_image_to_cloudinary(uploaded_file):
+    try:
+        # Convert to bytes
+        file_bytes = uploaded_file.getvalue()
+        upload_response = cloudinary.uploader.upload(file_bytes, folder="profile_photos")
+        return upload_response
+    except Exception as e:
+        st.error(f"An error occurred: {e}")
+        return None
+
+def main_app(username):
     st.title('UFC 297 -- "Fantasy" Championship')
     # Explanation of the points system
     st.markdown("""
@@ -189,19 +210,21 @@ def main_app():
     - **Method of Victory Prediction**: Correctly predicting the method of victory earns you **2 points**.
     - **Round Prediction**: Correctly predicting the round earns you **2 points** for 3-round fights. For 5-round fights, this prediction will earn you **3 points** if correct.
     """)
-    # User registration or login
-    name = st.text_input('Enter your name to log in or register:')
+
+    # Profile Photo Upload
+    uploaded_file = st.file_uploader("Choose a profile picture", type=["jpg", "jpeg", "png"])
+    if uploaded_file is not None:
+        # Show a preview of the uploaded image
+        st.image(uploaded_file, caption='Uploaded Image', use_column_width=True)
+        
+        # Upload to Cloudinary
+        upload_response = upload_image_to_cloudinary(uploaded_file)
+        if upload_response is not None:
+            image_url = upload_response['url']
+            # Here you can store the image_url to Airtable
+            update_user_profile(name, image_url)
     
-    if name:
-        st.write(f"Welcome {name}!")
-    
-        # If user is registered, show their predictions and score (you can add a real score calculation later)
-        if name in data['Name'].values:
-            user_data = data[data['Name'] == name]
-            st.table(user_data[['Fight', 'Question', 'Answer']])
-    
-        # If new user, show prediction form
-        else:
+ 
             # Function to display questions for each fight
             def questions_form(fight_title, questions, image):
                 st.subheader(fight_title)
@@ -362,6 +385,7 @@ def login_page(login_airtable=login_airtable):
         if submit_login:
             if inputs_are_valid(username, password) and check_credentials(username, password):
                 st.session_state['logged_in'] = True
+                st.session_state['username'] = username
                 st.experimental_rerun()
             elif not check_credentials(username, password):
                 st.error("Incorrect username or password")
@@ -384,6 +408,6 @@ def login_page(login_airtable=login_airtable):
 
 # Main script execution
 if st.session_state['logged_in']:
-    main_app()
+    main_app(st.session_state['username'])
 else:
     login_page()
