@@ -201,6 +201,10 @@ def upload_image_to_cloudinary(uploaded_file):
         st.error(f"An error occurred: {e}")
         return None
 
+def get_cloudinary_image_url(public_id):
+    cloud_name = os.environ.get('CLOUD_NAME')
+    return f"https://res.cloudinary.com/{cloud_name}/image/upload/{public_id}.png"
+
 def main_app(username):
     st.title('UFC 297 -- "Fantasy" Championship')
     # Explanation of the points system
@@ -363,6 +367,9 @@ def username_exists(username, airtable):
 
 def login_page(login_airtable=login_airtable):
     st.title("Login / Sign Up", anchor=None)
+    public_id = "ufc/ufc-login-page"  # Replace with your actual public ID
+    image_url = get_cloudinary_image_url(public_id)
+    st.image(image_url, width=300)
 
     with st.form("Login Form"):
         username = st.text_input("Username", placeholder="Enter your username")
