@@ -334,7 +334,7 @@ def username_exists(username, airtable):
 
     # Check if any record matches the username
     for record in records:
-        if record['fields'].get('Username') == username:
+        if record['fields'].get('username') == username:
             return True
     return False
 
