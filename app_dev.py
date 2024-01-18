@@ -205,6 +205,19 @@ def get_cloudinary_image_url(public_id):
     cloud_name = os.environ.get('CLOUD_NAME')
     return f"https://res.cloudinary.com/{cloud_name}/image/upload/{public_id}.png"
 
+def update_user_profile(username, image_url):
+    # Search for the user in Airtable
+    user_records = login_airtable.search('username', username)
+
+    if user_records:
+        user_id = user_records[0]['id']
+        # Update the record with the new image URL
+        login_airtable.update(user_id, {'photo': image_url})
+        st.success("Profile updated successfully.")
+    else:
+        st.error("User not found.")
+
+
 def main_app(username):
     st.title('UFC 297 -- "Fantasy" Championship')
     # Explanation of the points system
@@ -226,7 +239,7 @@ def main_app(username):
         if upload_response is not None:
             image_url = upload_response['url']
             # Here you can store the image_url to Airtable
-            update_user_profile(name, image_url)
+            update_user_profile(username, image_url)
     
  
             # Function to display questions for each fight
