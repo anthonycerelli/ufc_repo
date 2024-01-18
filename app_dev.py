@@ -327,6 +327,17 @@ def hash_password(password):
 def add_user(username, hashed_password, airtable):
     airtable.insert({'username': username, 'password': hashed_password.decode()})
 
+# Function to check if a username already exists in Airtable
+def username_exists(username, airtable):
+    # Fetch records from Airtable
+    records = airtable.get_all()  # Adjust this line according to your Airtable API usage
+
+    # Check if any record matches the username
+    for record in records:
+        if record['fields'].get('Username') == username:
+            return True
+    return False
+
 def login_page(login_airtable=login_airtable):
     st.title("Login / Sign Up", anchor=None)
 
@@ -357,15 +368,19 @@ def login_page(login_airtable=login_airtable):
 
         if submit_signup:
             if inputs_are_valid(username, password):
-                # Hash the password
-                hashed_password = hash_password(password)
-                
-                # Add the new user to Airtable
-                add_user(username, hashed_password, login_airtable)
-                
-                # Log the user in after signing up
-                st.session_state['logged_in'] = True
-                st.experimental_rerun()
+                # Check if username already exists in Airtable
+                if username_exists(username, login_airtable):
+                    st.error("Username already exists. Please choose a different one.")
+                else:
+                    # Hash the password
+                    hashed_password = hash_password(password)
+                    
+                    # Add the new user to Airtable
+                    add_user(username, hashed_password, login_airtable)
+                    
+                    # Log the user in after signing up
+                    st.session_state['logged_in'] = True
+                    st.experimental_rerun()
 
 # Main script execution
 if st.session_state['logged_in']:
