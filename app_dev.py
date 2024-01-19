@@ -8,6 +8,9 @@ import bcrypt
 import cloudinary
 import cloudinary.uploader
 
+# global variable fight_data -- 5 names of fights
+fight_data = ["Sean Strickland vs Dricus Du Plessis", "Raquel Pennington vs Mayra Bueno Silva", "Neil Magny vs Mike Malott", "Chris Curtis vs Marc-André Barriault", "Arnold Allen vs Movsar Evloev"]
+
 # Define a function to fetch and return data from Airtable
 def fetch_data(airtable_instance, columns):
     records = airtable_instance.get_all()
@@ -29,11 +32,11 @@ def fetch_betting_odds(fight_title):
     # This function should fetch betting odds from your data source.
     # For demonstration, I'm returning dummy data. Replace this with your actual data fetching logic.
     odds = {
-        "Sean Strickland vs Dricus Du Plessis": "Sean Strickland (-130) favourite",
-        "Raquel Pennington vs Mayra Bueno Silva": "Mayra Bueno Silva (-166) favourite",
-        "Neil Magny vs Mike Malott": "Mike Malott (-250) favourite",
-        "Chris Curtis vs Marc-André Barriault": "Chris Curtis (-166) favourite",
-        "Arnold Allen vs Movsar Evloev": "Movsar Evloev (-166) favourite"
+        fight_data[0]: "Sean Strickland (-130) favourite",
+        fight_data[1]: "Mayra Bueno Silva (-166) favourite",
+        fight_data[2]: "Mike Malott (-250) favourite",
+        fight_data[3]: "Chris Curtis (-166) favourite",
+        fight_data[4]: "Movsar Evloev (-166) favourite"
     }
     return odds.get(fight_title, "Odds not available")
 
@@ -86,38 +89,38 @@ answers = pd.DataFrame(answers_records_fields, columns=answers_columns)
 
 # Questions and options
 fights_questions = {
-    "Sean Strickland vs Dricus Du Plessis": {
+    fight_data[0]: {
         "fighter_1_image": "https://dmxg5wxfqgb4u.cloudfront.net/styles/athlete_bio_full_body/s3/2023-09/STRICKLAND_SEAN_L_BELTMOCK.png?itok=QLnBsSSa",
         "fighter_2_image": "https://dmxg5wxfqgb4u.cloudfront.net/styles/athlete_bio_full_body/s3/2023-07/DU_PLESSUS_DRICUS_L_07-08.png?itok=o3g5Swus",
-        "Winner of Main Event": ["Sean Strickland", "Dricus Du Plessis", "Draw"],
+        "Winner of Main Event": [fight_data[0].split('vs')[0].rstrip(), fight_data[0].split('vs')[1].lstrip(), "Draw"],
         "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
         "Round Prediction": ["Round 1", "Round 2", "Round 3", "Round 4", "Round 5"],
     },
-    "Raquel Pennington vs Mayra Bueno Silva": {
+    fight_data[1]: {
         "fighter_1_image": "https://dmxg5wxfqgb4u.cloudfront.net/styles/athlete_bio_full_body/s3/2023-02/PENNINGTON_RAQUEL_L_01-14.png?itok=ygnaP1S3",
         "fighter_2_image": "https://dmxg5wxfqgb4u.cloudfront.net/styles/athlete_bio_full_body/s3/2023-02/BUENO_SILVA_MAYRA_L_02-18.png?itok=w5Uxw6V5",
-        "Winner of Co-Main Event": ["Raquel Pennington", "Mayra Bueno Silva", "Draw"],
+        "Winner of Co-Main Event": [fight_data[1].split('vs')[0].rstrip(), fight_data[1].split('vs')[1].lstrip(), "Draw"],
         "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
         "Round Prediction": ["Round 1", "Round 2", "Round 3", "Round 4", "Round 5"],
     },
-    "Neil Magny vs Mike Malott": {
+    fight_data[2]: {
         "fighter_1_image": "https://dmxg5wxfqgb4u.cloudfront.net/styles/athlete_bio_full_body/s3/2023-06/MAGNY_NEIL_L_06-24.png?itok=tXrZ7OcK",
         "fighter_2_image": "https://dmxg5wxfqgb4u.cloudfront.net/styles/athlete_bio_full_body/s3/2023-06/MALOTT_MIKE_L_06-10.png?itok=I6d0Jn2U",
-        "Winner": ["Neil Magny", "Mike Malott", "Draw"],
+        "Winner": [fight_data[2].split('vs')[0].rstrip(), fight_data[2].split('vs')[1].lstrip(), "Draw"],
         "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
         "Round Prediction": ["Round 1", "Round 2", "Round 3"],
     },
-    "Chris Curtis vs Marc-André Barriault": {
+    fight_data[3]: {
         "fighter_1_image": "https://dmxg5wxfqgb4u.cloudfront.net/styles/athlete_bio_full_body/s3/2023-06/CURTIS_CHRIS_L_06-10.png?itok=1J6fb1lV",
         "fighter_2_image": "https://dmxg5wxfqgb4u.cloudfront.net/styles/athlete_bio_full_body/s3/2023-06/BARRIAULT_MARC-ANDRE_L_06-10.png?itok=A2cIJUsS",
-        "Winner": ["Chris Curtis", "Marc-André Barriault", "Draw"],
+        "Winner": [fight_data[3].split('vs')[0].rstrip(), fight_data[3].split('vs')[1].lstrip(), "Draw"],
         "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
         "Round Prediction": ["Round 1", "Round 2", "Round 3"],
     },
-    "Arnold Allen vs Movsar Evloev": {
+    fight_data[4]: {
         "fighter_1_image": "https://dmxg5wxfqgb4u.cloudfront.net/styles/athlete_bio_full_body/s3/2022-11/ALLEN_ARNOLD_L_10-29.png?itok=ikJBEURv",
         "fighter_2_image": "https://dmxg5wxfqgb4u.cloudfront.net/styles/athlete_bio_full_body/s3/2023-05/EVLOEV_MOVSAR_L_05-06.png?itok=G5cVdlSj",
-        "Winner": ["Arnold Allen", "Movsar Evloev", "Draw"],
+        "Winner": [fight_data[4].split('vs')[0].rstrip(), fight_data[4].split('vs')[1].lstrip(), "Draw"],
         "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
         "Round Prediction": ["Round 1", "Round 2", "Round 3"],
     },
@@ -173,7 +176,7 @@ def update_user_profile(username, image_url):
     else:
         st.error("User not found.")
 
-def main_app(username, data):
+def main_app(username, data, fight_data):
     st.title('UFC 297 -- "Fantasy" Championship')
     # Tabs
     if username == 'anthony':
@@ -229,48 +232,48 @@ def main_app(username, data):
 
         # Fight 1
         fight1_questions = {
-            "Winner of Main Event": ["Sean Strickland", "Dricus Du Plessis", "Draw"],
+            "Winner of Main Event": [fight_data[0].split('vs')[0].rstrip(), fight_data[0].split('vs')[1].lstrip(), "Draw"],
             "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
             "Round Prediction": ["Round 1", "Round 2", "Round 3", "Round 4", "Round 5"],
         }
-        fight_questions_temp = fights_questions["Sean Strickland vs Dricus Du Plessis"]
-        all_answers.extend(questions_form("Sean Strickland vs Dricus Du Plessis", fight1_questions, fight_questions_temp['fighter_1_image'],fight_questions_temp['fighter_2_image'], fight_questions_temp['Winner'][0], fight_questions_temp['Winner'][1]))
+        fight_questions_temp = fights_questions[fight_data[0]]
+        all_answers.extend(questions_form(fight_data[0], fight1_questions, fight_questions_temp['fighter_1_image'],fight_questions_temp['fighter_2_image'], fight_data[0].split('vs')[0].rstrip(), fight_data[0].split('vs')[1].lstrip()))
 
         # Fight 2
         fight2_questions = {
-            "Winner of Co-Main Event": ["Raquel Pennington", "Mayra Bueno Silva", "Draw"],
+            "Winner of Co-Main Event": [fight_data[1].split('vs')[0].rstrip(), fight_data[1].split('vs')[1].lstrip(), "Draw"],
             "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
             "Round Prediction": ["Round 1", "Round 2", "Round 3", "Round 4", "Round 5"],
         }
-        fight_questions_temp = fights_questions["Raquel Pennington vs Mayra Bueno Silva"]
-        all_answers.extend(questions_form("Raquel Pennington vs Mayra Bueno Silva", fight2_questions, fight_questions_temp['fighter_1_image'],fight_questions_temp['fighter_2_image'], fight_questions_temp['Winner'][0], fight_questions_temp['Winner'][1]))
+        fight_questions_temp = fights_questions[fight_data[1]]
+        all_answers.extend(questions_form(fight_data[1], fight2_questions, fight_questions_temp['fighter_1_image'],fight_questions_temp['fighter_2_image'], fight_data[1].split('vs')[0].rstrip(), fight_data[1].split('vs')[1].lstrip()))
 
         # Fight 3
         fight3_questions = {
-            "Winner": ["Neil Magny", "Mike Malott", "Draw"],
+            "Winner": [fight_data[2].split('vs')[0].rstrip(), fight_data[2].split('vs')[1].lstrip(), "Draw"],
             "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
             "Round Prediction": ["Round 1", "Round 2", "Round 3"],
         }
-        fight_questions_temp = fights_questions["Neil Magny vs Mike Malott"]
-        all_answers.extend(questions_form("Neil Magny vs Mike Malott", fight3_questions, fight_questions_temp['fighter_1_image'],fight_questions_temp['fighter_2_image'], fight_questions_temp['Winner'][0], fight_questions_temp['Winner'][1]))
+        fight_questions_temp = fights_questions[fight_data[2]]
+        all_answers.extend(questions_form(fight_data[2], fight3_questions, fight_questions_temp['fighter_1_image'],fight_questions_temp['fighter_2_image'], fight_data[2].split('vs')[0].rstrip(), fight_data[2].split('vs')[1].lstrip()))
 
         # Fight 4
         fight4_questions = {
-            "Winner": ["Chris Curtis", "Marc-André Barriault", "Draw"],
+            "Winner": [fight_data[3].split('vs')[0].rstrip(), fight_data[3].split('vs')[1].lstrip(), "Draw"],
             "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
             "Round Prediction": ["Round 1", "Round 2", "Round 3"],
         }
-        fight_questions_temp = fights_questions["Chris Curtis vs Marc-André Barriault"]
-        all_answers.extend(questions_form("Chris Curtis vs Marc-André Barriault", fight4_questions, fight_questions_temp['fighter_1_image'],fight_questions_temp['fighter_2_image'], fight_questions_temp['Winner'][0], fight_questions_temp['Winner'][1]))
+        fight_questions_temp = fights_questions[fight_data[3]]
+        all_answers.extend(questions_form(fight_data[3], fight4_questions, fight_questions_temp['fighter_1_image'],fight_questions_temp['fighter_2_image'], fight_data[3].split('vs')[0].rstrip(), fight_data[3].split('vs')[1].lstrip()))
 
         # Fight 5
         fight5_questions = {
-            "Winner": ["Arnold Allen", "Movsar Evloev", "Draw"],
+            "Winner": [fight_data[4].split('vs')[0].rstrip(), fight_data[4].split('vs')[1].lstrip(), "Draw"],
             "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
             "Round Prediction": ["Round 1", "Round 2", "Round 3"],
         }
-        fight_questions_temp = fights_questions["Arnold Allen vs Movsar Evloev"]
-        all_answers.extend(questions_form("Arnold Allen vs Movsar Evloev", fight5_questions, fight_questions_temp['fighter_1_image'],fight_questions_temp['fighter_2_image'], fight_questions_temp['Winner'][0], fight_questions_temp['Winner'][1]))
+        fight_questions_temp = fights_questions[fight_data[4]]
+        all_answers.extend(questions_form(fight_data[4], fight5_questions, fight_questions_temp['fighter_1_image'],fight_questions_temp['fighter_2_image'], fight_data[4].split('vs')[0].rstrip(), fight_data[4].split('vs')[1].lstrip()))
 
         if st.button('Submit Predictions'):
             # Save user predictions to the data DataFrame and CSV file
@@ -446,6 +449,6 @@ def login_page(login_airtable=login_airtable):
 
 # Main script execution
 if st.session_state['logged_in']:
-    main_app(st.session_state['username'], data)
+    main_app(st.session_state['username'], data, fight_data)
 else:
     login_page()
