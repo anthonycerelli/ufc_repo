@@ -278,7 +278,7 @@ def main_app(username, data, fight_data):
         if st.button('Submit Predictions'):
             # Save user predictions to the data DataFrame and CSV file
             for fight, question, answer in all_answers:
-                record = {'Name': username, 'Photo': 'photo_path_here', 'Fight': fight, 'Question': question, 'Answer': answer, 'Points': 0.0}
+                record = {'Name': username, 'Fight': fight, 'Question': question, 'Answer': answer, 'Points': 0.0}
                 data = data.append(record, ignore_index=True)
                 data_airtable.insert(record)
             st.success('Predictions submitted!')
