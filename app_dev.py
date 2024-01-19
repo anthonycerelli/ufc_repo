@@ -212,7 +212,7 @@ def update_user_profile(username, image_url):
     if user_records:
         user_id = user_records[0]['id']
         # Update the record with the new image URL
-        login_airtable.update(user_id, {'photo': image_url})
+        login_airtable.update(user_id, {'profile_photo': image_url})
         st.success("Profile updated successfully.")
     else:
         st.error("User not found.")
@@ -230,17 +230,13 @@ def main_app(username):
 
     # Profile Photo Upload
     uploaded_file = st.file_uploader("Choose a profile picture", type=["jpg", "jpeg", "png"])
-    if uploaded_file is not None:
-        # Show a preview of the uploaded image
-        st.image(uploaded_file, caption='Uploaded Image', use_column_width=True)
-        
+    if uploaded_file is not None:     
         # Upload to Cloudinary
         upload_response = upload_image_to_cloudinary(uploaded_file)
         if upload_response is not None:
             image_url = upload_response['url']
             # Here you can store the image_url to Airtable
             update_user_profile(username, image_url)
-    
  
             # Function to display questions for each fight
             def questions_form(fight_title, questions, image):
