@@ -87,7 +87,6 @@ answers = pd.DataFrame(answers_records_fields, columns=answers_columns)
 # Questions and options
 fights_questions = {
     "Sean Strickland vs Dricus Du Plessis": {
-        "image": "https://cdn.vox-cdn.com/thumbor/dD02U2Q-ICHoFJZfcJ8C7G02LYg=/0x0:4482x3135/1200x800/filters:focal(1722x0:2438x716)/cdn.vox-cdn.com/uploads/chorus_image/image/72968836/1858548737.0.jpg",
         "fighter_1_image": "https://dmxg5wxfqgb4u.cloudfront.net/styles/athlete_bio_full_body/s3/2023-09/STRICKLAND_SEAN_L_BELTMOCK.png?itok=QLnBsSSa",
         "fighter_2_image": "https://dmxg5wxfqgb4u.cloudfront.net/styles/athlete_bio_full_body/s3/2023-07/DU_PLESSUS_DRICUS_L_07-08.png?itok=o3g5Swus",
         "Winner of Main Event": ["Sean Strickland", "Dricus Du Plessis", "Draw"],
@@ -95,33 +94,29 @@ fights_questions = {
         "Round Prediction": ["Round 1", "Round 2", "Round 3", "Round 4", "Round 5"],
     },
     "Raquel Pennington vs Mayra Bueno Silva": {
-        "image": "https://www.bjpenn.com/wp-content/uploads/2023/12/Alexandre-Pantoja-Brandon-Royval-1.jpg",
-        "fighter_1_image": "",
-        "fighter_2_image": "",
+        "fighter_1_image": "https://dmxg5wxfqgb4u.cloudfront.net/styles/athlete_bio_full_body/s3/2023-02/PENNINGTON_RAQUEL_L_01-14.png?itok=ygnaP1S3",
+        "fighter_2_image": "https://dmxg5wxfqgb4u.cloudfront.net/styles/athlete_bio_full_body/s3/2023-02/BUENO_SILVA_MAYRA_L_02-18.png?itok=w5Uxw6V5",
         "Winner of Co-Main Event": ["Raquel Pennington", "Mayra Bueno Silva", "Draw"],
         "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
         "Round Prediction": ["Round 1", "Round 2", "Round 3", "Round 4", "Round 5"],
     },
     "Neil Magny vs Mike Malott": {
-        "image": "https://mmajunkie.usatoday.com/wp-content/uploads/sites/91/2023/12/ufc-296-Shavkat-vs-Wonderboy.jpg?w=1000&h=600&crop=1",
-        "fighter_1_image": "",
-        "fighter_2_image": "",
+        "fighter_1_image": "https://dmxg5wxfqgb4u.cloudfront.net/styles/athlete_bio_full_body/s3/2023-06/MAGNY_NEIL_L_06-24.png?itok=tXrZ7OcK",
+        "fighter_2_image": "https://dmxg5wxfqgb4u.cloudfront.net/styles/athlete_bio_full_body/s3/2023-06/MALOTT_MIKE_L_06-10.png?itok=I6d0Jn2U",
         "Winner": ["Neil Magny", "Mike Malott", "Draw"],
         "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
         "Round Prediction": ["Round 1", "Round 2", "Round 3"],
     },
     "Chris Curtis vs Marc-André Barriault": {
-        "image": "https://talksport.com/wp-content/uploads/sites/5/2023/03/l-r-opponents-tony-ferguson-866363622.jpg",
-        "fighter_1_image": "",
-        "fighter_2_image": "",
+        "fighter_1_image": "https://dmxg5wxfqgb4u.cloudfront.net/styles/athlete_bio_full_body/s3/2023-06/CURTIS_CHRIS_L_06-10.png?itok=1J6fb1lV",
+        "fighter_2_image": "https://dmxg5wxfqgb4u.cloudfront.net/styles/athlete_bio_full_body/s3/2023-06/BARRIAULT_MARC-ANDRE_L_06-10.png?itok=A2cIJUsS",
         "Winner": ["Chris Curtis", "Marc-André Barriault", "Draw"],
         "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
         "Round Prediction": ["Round 1", "Round 2", "Round 3"],
     },
     "Arnold Allen vs Movsar Evloev": {
-        "image": "https://static.wixstatic.com/media/668b59_8bd46ad49b17409db7f3a755f015abe2~mv2.jpg/v1/fill/w_640,h_360,al_c,q_80,usm_0.66_1.00_0.01,enc_auto/668b59_8bd46ad49b17409db7f3a755f015abe2~mv2.jpg",
-        "fighter_1_image": "",
-        "fighter_2_image": "",
+        "fighter_1_image": "https://dmxg5wxfqgb4u.cloudfront.net/styles/athlete_bio_full_body/s3/2022-11/ALLEN_ARNOLD_L_10-29.png?itok=ikJBEURv",
+        "fighter_2_image": "https://dmxg5wxfqgb4u.cloudfront.net/styles/athlete_bio_full_body/s3/2023-05/EVLOEV_MOVSAR_L_05-06.png?itok=G5cVdlSj",
         "Winner": ["Arnold Allen", "Movsar Evloev", "Draw"],
         "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
         "Round Prediction": ["Round 1", "Round 2", "Round 3"],
@@ -218,7 +213,7 @@ def main_app(username, data):
         
             # Use the second column for the title, betting odds, and questions
             with col2:
-                st.markdown(f"**Betting Odds:** {fetch_betting_odds(fight_title)}")
+                # st.markdown(f"**Betting Odds:** {fetch_betting_odds(fight_title)}")
                 answers = []
                 for title, options in questions.items():
                     key = f"{fight_title}: {title}"
@@ -236,29 +231,6 @@ def main_app(username, data):
                         answers.append((fight_title, title, answer))
         
             return answers
-        # Function to display questions for each fight
-        # def questions_form(fight_title, questions, image):
-        #     st.subheader(fight_title)
-        #     st.image(image)
-        #     # Fetch and display betting odds
-        #     odds = fetch_betting_odds(fight_title)
-        #     st.markdown(f"**Betting Odds:** {odds}")
-        #     answers = []
-        #     for title, options in questions.items():
-        #         key = f"{fight_title}: {title}"
-        #         if title == 'Method of Victory':
-        #             method = st.selectbox(title, options, key=key)
-        #             answers.append((fight_title, title, method))
-        #             # Automatically assign "Decision" round if method of victory is "Decision"
-        #             if method == 'Decision':
-        #                 answers.append((fight_title, 'Round Prediction', 'Decision'))
-        #             else:
-        #                 round_prediction = st.selectbox('Round Prediction', questions['Round Prediction'], key=key+'_round')
-        #                 answers.append((fight_title, 'Round Prediction', round_prediction))
-        #         elif title != 'Round Prediction':  # Skip round prediction if already handled
-        #             answer = st.selectbox(title, options, key=key)
-        #             answers.append((fight_title, title, answer))
-        #     return answers
 
         # Collect user predictions for each fight
         all_answers = []
