@@ -220,14 +220,8 @@ def update_user_profile(username, image_url):
 
 def main_app(username):
     st.title('UFC 297 -- "Fantasy" Championship')
-    # Explanation of the points system
-    st.markdown("""
-    #### Points System
-    - **Winner Prediction**: Correctly predicting the winner of a fight earns you **1 point**.
-    - **Method of Victory Prediction**: Correctly predicting the method of victory earns you **2 points**.
-    - **Round Prediction**: Correctly predicting the round earns you **2 points** for 3-round fights. For 5-round fights, this prediction will earn you **3 points** if correct.
-    """)
-
+    # Tabs
+    tab1, tab2 = st.tabs(["Make Predictions", "Game Leaderboard"])
     # Profile Photo Upload
     uploaded_file = st.file_uploader("Choose a profile picture", type=["jpg", "jpeg", "png"])
     if uploaded_file is not None:     
@@ -237,89 +231,98 @@ def main_app(username):
             image_url = upload_response['url']
             # Here you can store the image_url to Airtable
             update_user_profile(username, image_url)
- 
-            # Function to display questions for each fight
-            def questions_form(fight_title, questions, image):
-                st.subheader(fight_title)
-                st.image(image)
-                # Fetch and display betting odds
-                odds = fetch_betting_odds(fight_title)
-                st.markdown(f"**Betting Odds:** {odds}")
-                answers = []
-                for title, options in questions.items():
-                    key = f"{fight_title}: {title}"
-                    if title == 'Method of Victory':
-                        method = st.selectbox(title, options, key=key)
-                        answers.append((fight_title, title, method))
-                        # Automatically assign "Decision" round if method of victory is "Decision"
-                        if method == 'Decision':
-                            answers.append((fight_title, 'Round Prediction', 'Decision'))
-                        else:
-                            round_prediction = st.selectbox('Round Prediction', questions['Round Prediction'], key=key+'_round')
-                            answers.append((fight_title, 'Round Prediction', round_prediction))
-                    elif title != 'Round Prediction':  # Skip round prediction if already handled
-                        answer = st.selectbox(title, options, key=key)
-                        answers.append((fight_title, title, answer))
-                return answers
-    
-            # Collect user predictions for each fight
-            all_answers = []
-    
-            # Fight 1
-            fight1_questions = {
-                "Winner of Main Event": ["Sean Strickland", "Dricus Du Plessis", "Draw"],
-                "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
-                "Round Prediction": ["Round 1", "Round 2", "Round 3", "Round 4", "Round 5"],
-            }
-            all_answers.extend(questions_form("Sean Strickland vs Dricus Du Plessis", fight1_questions, fights_questions["Sean Strickland vs Dricus Du Plessis"]['image']))
-    
-            # Fight 2
-            fight2_questions = {
-                "Winner of Co-Main Event": ["Raquel Pennington", "Mayra Bueno Silva", "Draw"],
-                "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
-                "Round Prediction": ["Round 1", "Round 2", "Round 3", "Round 4", "Round 5"],
-            }
-            all_answers.extend(questions_form("Raquel Pennington vs Mayra Bueno Silva", fight2_questions, fights_questions["Raquel Pennington vs Mayra Bueno Silva"]['image']))
-    
-            # Fight 3
-            fight3_questions = {
-                "Winner": ["Neil Magny", "Mike Malott", "Draw"],
-                "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
-                "Round Prediction": ["Round 1", "Round 2", "Round 3"],
-            }
-            all_answers.extend(questions_form("Neil Magny vs Mike Malott", fight3_questions, fights_questions["Neil Magny vs Mike Malott"]['image']))
-    
-            # Fight 4
-            fight4_questions = {
-                "Winner": ["Chris Curtis", "Marc-André Barriault", "Draw"],
-                "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
-                "Round Prediction": ["Round 1", "Round 2", "Round 3"],
-            }
-            all_answers.extend(questions_form("Chris Curtis vs Marc-André Barriault", fight4_questions, fights_questions["Chris Curtis vs Marc-André Barriault"]['image']))
-    
-            # Fight 5
-            fight5_questions = {
-                "Winner": ["Arnold Allen", "Movsar Evloev", "Draw"],
-                "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
-                "Round Prediction": ["Round 1", "Round 2", "Round 3"],
-            }
-            all_answers.extend(questions_form("Arnold Allen vs Movsar Evloev", fight5_questions, fights_questions["Arnold Allen vs Movsar Evloev"]['image']))
-    
-            if st.button('Submit Predictions'):
-                # Save user predictions to the data DataFrame and CSV file
-                for fight, question, answer in all_answers:
-                    record = {'Name': name, 'Photo': 'photo_path_here', 'Fight': fight, 'Question': question, 'Answer': answer, 'Points': 0.0}
-                    data = data.append(record, ignore_index=True)
-                    data_airtable.insert(record)
-                st.success('Predictions submitted!')
-    
-            # Display user's total points
-            if name in data['Name'].values:
-                    total_points = data[data['Name'] == name]['Points'].sum()
-                    st.write(f"Your total points: {total_points}")
+    # Tab 1 data
+    with tab1:
+        # Explanation of the points system
+        st.markdown("""
+        #### Points System
+        - **Winner Prediction**: Correctly predicting the winner of a fight earns you **1 point**.
+        - **Method of Victory Prediction**: Correctly predicting the method of victory earns you **2 points**.
+        - **Round Prediction**: Correctly predicting the round earns you **2 points** for 3-round fights. For 5-round fights, this prediction will earn you **3 points** if correct.
+        """)
+
+        # Function to display questions for each fight
+        def questions_form(fight_title, questions, image):
+            st.subheader(fight_title)
+            st.image(image)
+            # Fetch and display betting odds
+            odds = fetch_betting_odds(fight_title)
+            st.markdown(f"**Betting Odds:** {odds}")
+            answers = []
+            for title, options in questions.items():
+                key = f"{fight_title}: {title}"
+                if title == 'Method of Victory':
+                    method = st.selectbox(title, options, key=key)
+                    answers.append((fight_title, title, method))
+                    # Automatically assign "Decision" round if method of victory is "Decision"
+                    if method == 'Decision':
+                        answers.append((fight_title, 'Round Prediction', 'Decision'))
+                    else:
+                        round_prediction = st.selectbox('Round Prediction', questions['Round Prediction'], key=key+'_round')
+                        answers.append((fight_title, 'Round Prediction', round_prediction))
+                elif title != 'Round Prediction':  # Skip round prediction if already handled
+                    answer = st.selectbox(title, options, key=key)
+                    answers.append((fight_title, title, answer))
+            return answers
+
+        # Collect user predictions for each fight
+        all_answers = []
+
+        # Fight 1
+        fight1_questions = {
+            "Winner of Main Event": ["Sean Strickland", "Dricus Du Plessis", "Draw"],
+            "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
+            "Round Prediction": ["Round 1", "Round 2", "Round 3", "Round 4", "Round 5"],
+        }
+        all_answers.extend(questions_form("Sean Strickland vs Dricus Du Plessis", fight1_questions, fights_questions["Sean Strickland vs Dricus Du Plessis"]['image']))
+
+        # Fight 2
+        fight2_questions = {
+            "Winner of Co-Main Event": ["Raquel Pennington", "Mayra Bueno Silva", "Draw"],
+            "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
+            "Round Prediction": ["Round 1", "Round 2", "Round 3", "Round 4", "Round 5"],
+        }
+        all_answers.extend(questions_form("Raquel Pennington vs Mayra Bueno Silva", fight2_questions, fights_questions["Raquel Pennington vs Mayra Bueno Silva"]['image']))
+
+        # Fight 3
+        fight3_questions = {
+            "Winner": ["Neil Magny", "Mike Malott", "Draw"],
+            "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
+            "Round Prediction": ["Round 1", "Round 2", "Round 3"],
+        }
+        all_answers.extend(questions_form("Neil Magny vs Mike Malott", fight3_questions, fights_questions["Neil Magny vs Mike Malott"]['image']))
+
+        # Fight 4
+        fight4_questions = {
+            "Winner": ["Chris Curtis", "Marc-André Barriault", "Draw"],
+            "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
+            "Round Prediction": ["Round 1", "Round 2", "Round 3"],
+        }
+        all_answers.extend(questions_form("Chris Curtis vs Marc-André Barriault", fight4_questions, fights_questions["Chris Curtis vs Marc-André Barriault"]['image']))
+
+        # Fight 5
+        fight5_questions = {
+            "Winner": ["Arnold Allen", "Movsar Evloev", "Draw"],
+            "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
+            "Round Prediction": ["Round 1", "Round 2", "Round 3"],
+        }
+        all_answers.extend(questions_form("Arnold Allen vs Movsar Evloev", fight5_questions, fights_questions["Arnold Allen vs Movsar Evloev"]['image']))
+
+        if st.button('Submit Predictions'):
+            # Save user predictions to the data DataFrame and CSV file
+            for fight, question, answer in all_answers:
+                record = {'Name': name, 'Photo': 'photo_path_here', 'Fight': fight, 'Question': question, 'Answer': answer, 'Points': 0.0}
+                data = data.append(record, ignore_index=True)
+                data_airtable.insert(record)
+            st.success('Predictions submitted!')
+
+        # Display user's total points
+        if name in data['Name'].values:
+                total_points = data[data['Name'] == name]['Points'].sum()
+                st.write(f"Your total points: {total_points}")
     
     # Update the section where you render the chart
-    if st.checkbox('Show all players and their total points'):
+    with tab2:
         st.write('Players Points:')
         
         # Fetch data and sort
