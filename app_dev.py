@@ -151,45 +151,6 @@ def check_credentials(username, password, airtable=login_airtable):
 
 st.set_page_config(layout="wide") 
 
-# # Admin interface for updating correct answers
-# if st.checkbox('Admin Interface'):
-#     password = st.text_input("Enter Password", type='password')
-#     if password == 'tony':
-#         st.subheader('Update Correct Answers')
-#         if not answers.empty:
-#             selected_fight = st.selectbox('Select Fight', answers['Fight'].unique())
-#             fight_questions = answers[answers['Fight'] == selected_fight]
-#             selected_question = st.selectbox('Select Question', fight_questions['Question'].unique())
-    
-#             # Getting options for the selected fight and question
-#             options = fights_questions[selected_fight][selected_question]
-#             correct_answer = st.selectbox('Correct Answer', options)
-    
-#             points = st.number_input('Points', value=0)
-    
-#             if st.button('Update Answer'):
-#                 # Update the correct answer in the answers Airtable
-#                 answer_records = answers_airtable.search('Fight', selected_fight)
-                
-#                 for record in answer_records:
-#                     if record['fields']['Question'] == selected_question:
-#                         answers_airtable.update(record['id'], {'Correct Answer': correct_answer, 'Points': points})
-#                         break
-    
-#                 # Update points for users who got the correct answer in the data Airtable
-#                 prediction_records = data_airtable.search('Fight', selected_fight)
-                
-#                 for record in prediction_records:
-#                     if record['fields']['Question'] == selected_question and record['fields']['Answer'] == correct_answer:
-#                         data_airtable.update(record['id'], {'Points': points})
-    
-#                 st.success(f'Correct answer updated for {selected_fight} - {selected_question}.')
-    
-#         else:
-#             st.warning('Please add fights and questions to the answers.csv file.')
-#     else:
-#         st.error('Wrong password')
-
 # Upload function for cloudinary
 def upload_image_to_cloudinary(uploaded_file):
     try:
@@ -217,11 +178,13 @@ def update_user_profile(username, image_url):
     else:
         st.error("User not found.")
 
-
 def main_app(username):
     st.title('UFC 297 -- "Fantasy" Championship')
     # Tabs
-    tab1, tab2 = st.tabs(["Make Predictions", "Game Leaderboard"])
+    if username == 'anthony':
+        tab1, tab2, tab3 = st.tabs(["Make Predictions", "Game Leaderboard", "Admin"])
+    else:
+        tab1, tab2 = st.tabs(["Make Predictions", "Game Leaderboard"])
     # Profile Photo Upload
     uploaded_file = st.file_uploader("Choose a profile picture", type=["jpg", "jpeg", "png"])
     if uploaded_file is not None:     
@@ -355,6 +318,39 @@ def main_app(username):
             st.plotly_chart(fig, use_container_width=True)
         else:
             st.plotly_chart(fig, use_container_width=True)
+            
+    if username == 'anthony':
+        with tab3:
+            # Admin interface for updating correct answers
+            st.subheader('Update Correct Answers')
+            if not answers.empty:
+                selected_fight = st.selectbox('Select Fight', answers['Fight'].unique())
+                fight_questions = answers[answers['Fight'] == selected_fight]
+                selected_question = st.selectbox('Select Question', fight_questions['Question'].unique())
+        
+                # Getting options for the selected fight and question
+                options = fights_questions[selected_fight][selected_question]
+                correct_answer = st.selectbox('Correct Answer', options)
+        
+                points = st.number_input('Points', value=0)
+        
+                if st.button('Update Answer'):
+                    # Update the correct answer in the answers Airtable
+                    answer_records = answers_airtable.search('Fight', selected_fight)
+                    
+                    for record in answer_records:
+                        if record['fields']['Question'] == selected_question:
+                            answers_airtable.update(record['id'], {'Correct Answer': correct_answer, 'Points': points})
+                            break
+        
+                    # Update points for users who got the correct answer in the data Airtable
+                    prediction_records = data_airtable.search('Fight', selected_fight)
+                    
+                    for record in prediction_records:
+                        if record['fields']['Question'] == selected_question and record['fields']['Answer'] == correct_answer:
+                            data_airtable.update(record['id'], {'Points': points})
+        
+                    st.success(f'Correct answer updated for {selected_fight} - {selected_question}.')
 
 # Function to hash password
 def hash_password(password):
