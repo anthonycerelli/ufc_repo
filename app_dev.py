@@ -280,7 +280,7 @@ def main_app(username):
             st.success('Predictions submitted!')
 
         # Display user's total points
-        if name in data['Name'].values:
+        if username in data['Name'].values:
                 total_points = data[data['Name'] == name]['Points'].sum()
                 st.write(f"Your total points: {total_points}")
     
