@@ -190,7 +190,7 @@ def main_app(username, data):
         - **Method of Victory Prediction**: Correctly predicting the method of victory earns you **2 points**.
         - **Round Prediction**: Correctly predicting the round earns you **2 points** for 3-round fights. For 5-round fights, this prediction will earn you **3 points** if correct.
         """)
-        def questions_form(fight_title, questions, image_fighter_1, image_fighter_2):
+        def questions_form(fight_title, questions, image_fighter_1, image_fighter_2, fighter_1, fighter_2):
             st.markdown(f"### {fight_title}")
         
             # Create three columns
@@ -198,10 +198,10 @@ def main_app(username, data):
         
             # Display the images in the first and third columns
             with col1:
-                st.image(image_fighter_1, caption='Fighter 1')
+                st.image(image_fighter_1, caption=fighter_1)
         
             with col3:
-                st.image(image_fighter_2, caption='Fighter 2')
+                st.image(image_fighter_2, caption=fighter_2)
         
             # Use the second column for the title, betting odds, and questions
             with col2:
