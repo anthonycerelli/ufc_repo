@@ -178,7 +178,7 @@ def update_user_profile(username, image_url):
     else:
         st.error("User not found.")
 
-def main_app(username):
+def main_app(username, data):
     st.title('UFC 297 -- "Fantasy" Championship')
     # Tabs
     if username == 'anthony':
@@ -420,6 +420,6 @@ def login_page(login_airtable=login_airtable):
 
 # Main script execution
 if st.session_state['logged_in']:
-    main_app(st.session_state['username'])
+    main_app(st.session_state['username'], data)
 else:
     login_page()
