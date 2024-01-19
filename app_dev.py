@@ -92,35 +92,35 @@ fights_questions = {
     fight_data[0]: {
         "fighter_1_image": "https://dmxg5wxfqgb4u.cloudfront.net/styles/athlete_bio_full_body/s3/2023-09/STRICKLAND_SEAN_L_BELTMOCK.png?itok=QLnBsSSa",
         "fighter_2_image": "https://dmxg5wxfqgb4u.cloudfront.net/styles/athlete_bio_full_body/s3/2023-07/DU_PLESSUS_DRICUS_L_07-08.png?itok=o3g5Swus",
-        "Winner of Main Event": [fight_data[0].split('vs')[0].rstrip(), fight_data[0].split('vs')[1].lstrip(), "Draw"],
+        "Winner of Main Event": [fight_data[0].split(' vs ')[0].rstrip(), fight_data[0].split(' vs ')[1].lstrip(), "Draw"],
         "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
         "Round Prediction": ["Round 1", "Round 2", "Round 3", "Round 4", "Round 5"],
     },
     fight_data[1]: {
         "fighter_1_image": "https://dmxg5wxfqgb4u.cloudfront.net/styles/athlete_bio_full_body/s3/2023-02/PENNINGTON_RAQUEL_L_01-14.png?itok=ygnaP1S3",
         "fighter_2_image": "https://dmxg5wxfqgb4u.cloudfront.net/styles/athlete_bio_full_body/s3/2023-02/BUENO_SILVA_MAYRA_L_02-18.png?itok=w5Uxw6V5",
-        "Winner of Co-Main Event": [fight_data[1].split('vs')[0].rstrip(), fight_data[1].split('vs')[1].lstrip(), "Draw"],
+        "Winner of Co-Main Event": [fight_data[1].split(' vs ')[0].rstrip(), fight_data[1].split(' vs ')[1].lstrip(), "Draw"],
         "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
         "Round Prediction": ["Round 1", "Round 2", "Round 3", "Round 4", "Round 5"],
     },
     fight_data[2]: {
         "fighter_1_image": "https://dmxg5wxfqgb4u.cloudfront.net/styles/athlete_bio_full_body/s3/2023-06/MAGNY_NEIL_L_06-24.png?itok=tXrZ7OcK",
         "fighter_2_image": "https://dmxg5wxfqgb4u.cloudfront.net/styles/athlete_bio_full_body/s3/2023-06/MALOTT_MIKE_L_06-10.png?itok=I6d0Jn2U",
-        "Winner": [fight_data[2].split('vs')[0].rstrip(), fight_data[2].split('vs')[1].lstrip(), "Draw"],
+        "Winner": [fight_data[2].split(' vs ')[0].rstrip(), fight_data[2].split(' vs ')[1].lstrip(), "Draw"],
         "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
         "Round Prediction": ["Round 1", "Round 2", "Round 3"],
     },
     fight_data[3]: {
         "fighter_1_image": "https://dmxg5wxfqgb4u.cloudfront.net/styles/athlete_bio_full_body/s3/2023-06/CURTIS_CHRIS_L_06-10.png?itok=1J6fb1lV",
         "fighter_2_image": "https://dmxg5wxfqgb4u.cloudfront.net/styles/athlete_bio_full_body/s3/2023-06/BARRIAULT_MARC-ANDRE_L_06-10.png?itok=A2cIJUsS",
-        "Winner": [fight_data[3].split('vs')[0].rstrip(), fight_data[3].split('vs')[1].lstrip(), "Draw"],
+        "Winner": [fight_data[3].split(' vs ')[0].rstrip(), fight_data[3].split(' vs ')[1].lstrip(), "Draw"],
         "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
         "Round Prediction": ["Round 1", "Round 2", "Round 3"],
     },
     fight_data[4]: {
         "fighter_1_image": "https://dmxg5wxfqgb4u.cloudfront.net/styles/athlete_bio_full_body/s3/2022-11/ALLEN_ARNOLD_L_10-29.png?itok=ikJBEURv",
         "fighter_2_image": "https://dmxg5wxfqgb4u.cloudfront.net/styles/athlete_bio_full_body/s3/2023-05/EVLOEV_MOVSAR_L_05-06.png?itok=G5cVdlSj",
-        "Winner": [fight_data[4].split('vs')[0].rstrip(), fight_data[4].split('vs')[1].lstrip(), "Draw"],
+        "Winner": [fight_data[4].split(' vs ')[0].rstrip(), fight_data[4].split(' vs ')[1].lstrip(), "Draw"],
         "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
         "Round Prediction": ["Round 1", "Round 2", "Round 3"],
     },
@@ -232,48 +232,48 @@ def main_app(username, data, fight_data):
 
         # Fight 1
         fight1_questions = {
-            "Winner of Main Event": [fight_data[0].split('vs')[0].rstrip(), fight_data[0].split('vs')[1].lstrip(), "Draw"],
+            "Winner of Main Event": [fight_data[0].split(' vs ')[0].rstrip(), fight_data[0].split(' vs ')[1].lstrip(), "Draw"],
             "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
             "Round Prediction": ["Round 1", "Round 2", "Round 3", "Round 4", "Round 5"],
         }
         fight_questions_temp = fights_questions[fight_data[0]]
-        all_answers.extend(questions_form(fight_data[0], fight1_questions, fight_questions_temp['fighter_1_image'],fight_questions_temp['fighter_2_image'], fight_data[0].split('vs')[0].rstrip(), fight_data[0].split('vs')[1].lstrip()))
+        all_answers.extend(questions_form(fight_data[0], fight1_questions, fight_questions_temp['fighter_1_image'],fight_questions_temp['fighter_2_image'], fight_data[0].split(' vs ')[0].rstrip(), fight_data[0].split(' vs ')[1].lstrip()))
 
         # Fight 2
         fight2_questions = {
-            "Winner of Co-Main Event": [fight_data[1].split('vs')[0].rstrip(), fight_data[1].split('vs')[1].lstrip(), "Draw"],
+            "Winner of Co-Main Event": [fight_data[1].split(' vs ')[0].rstrip(), fight_data[1].split(' vs ')[1].lstrip(), "Draw"],
             "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
             "Round Prediction": ["Round 1", "Round 2", "Round 3", "Round 4", "Round 5"],
         }
         fight_questions_temp = fights_questions[fight_data[1]]
-        all_answers.extend(questions_form(fight_data[1], fight2_questions, fight_questions_temp['fighter_1_image'],fight_questions_temp['fighter_2_image'], fight_data[1].split('vs')[0].rstrip(), fight_data[1].split('vs')[1].lstrip()))
+        all_answers.extend(questions_form(fight_data[1], fight2_questions, fight_questions_temp['fighter_1_image'],fight_questions_temp['fighter_2_image'], fight_data[1].split(' vs ')[0].rstrip(), fight_data[1].split(' vs ')[1].lstrip()))
 
         # Fight 3
         fight3_questions = {
-            "Winner": [fight_data[2].split('vs')[0].rstrip(), fight_data[2].split('vs')[1].lstrip(), "Draw"],
+            "Winner": [fight_data[2].split(' vs ')[0].rstrip(), fight_data[2].split(' vs ')[1].lstrip(), "Draw"],
             "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
             "Round Prediction": ["Round 1", "Round 2", "Round 3"],
         }
         fight_questions_temp = fights_questions[fight_data[2]]
-        all_answers.extend(questions_form(fight_data[2], fight3_questions, fight_questions_temp['fighter_1_image'],fight_questions_temp['fighter_2_image'], fight_data[2].split('vs')[0].rstrip(), fight_data[2].split('vs')[1].lstrip()))
+        all_answers.extend(questions_form(fight_data[2], fight3_questions, fight_questions_temp['fighter_1_image'],fight_questions_temp['fighter_2_image'], fight_data[2].split(' vs ')[0].rstrip(), fight_data[2].split(' vs ')[1].lstrip()))
 
         # Fight 4
         fight4_questions = {
-            "Winner": [fight_data[3].split('vs')[0].rstrip(), fight_data[3].split('vs')[1].lstrip(), "Draw"],
+            "Winner": [fight_data[3].split(' vs ')[0].rstrip(), fight_data[3].split(' vs ')[1].lstrip(), "Draw"],
             "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
             "Round Prediction": ["Round 1", "Round 2", "Round 3"],
         }
         fight_questions_temp = fights_questions[fight_data[3]]
-        all_answers.extend(questions_form(fight_data[3], fight4_questions, fight_questions_temp['fighter_1_image'],fight_questions_temp['fighter_2_image'], fight_data[3].split('vs')[0].rstrip(), fight_data[3].split('vs')[1].lstrip()))
+        all_answers.extend(questions_form(fight_data[3], fight4_questions, fight_questions_temp['fighter_1_image'],fight_questions_temp['fighter_2_image'], fight_data[3].split(' vs ')[0].rstrip(), fight_data[3].split(' vs ')[1].lstrip()))
 
         # Fight 5
         fight5_questions = {
-            "Winner": [fight_data[4].split('vs')[0].rstrip(), fight_data[4].split('vs')[1].lstrip(), "Draw"],
+            "Winner": [fight_data[4].split(' vs ')[0].rstrip(), fight_data[4].split(' vs ')[1].lstrip(), "Draw"],
             "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
             "Round Prediction": ["Round 1", "Round 2", "Round 3"],
         }
         fight_questions_temp = fights_questions[fight_data[4]]
-        all_answers.extend(questions_form(fight_data[4], fight5_questions, fight_questions_temp['fighter_1_image'],fight_questions_temp['fighter_2_image'], fight_data[4].split('vs')[0].rstrip(), fight_data[4].split('vs')[1].lstrip()))
+        all_answers.extend(questions_form(fight_data[4], fight5_questions, fight_questions_temp['fighter_1_image'],fight_questions_temp['fighter_2_image'], fight_data[4].split(' vs ')[0].rstrip(), fight_data[4].split(' vs ')[1].lstrip()))
 
         if st.button('Submit Predictions'):
             # Save user predictions to the data DataFrame and CSV file
