@@ -203,30 +203,62 @@ def main_app(username, data):
         - **Method of Victory Prediction**: Correctly predicting the method of victory earns you **2 points**.
         - **Round Prediction**: Correctly predicting the round earns you **2 points** for 3-round fights. For 5-round fights, this prediction will earn you **3 points** if correct.
         """)
-
-        # Function to display questions for each fight
-        def questions_form(fight_title, questions, image):
-            st.subheader(fight_title)
-            st.image(image)
-            # Fetch and display betting odds
-            odds = fetch_betting_odds(fight_title)
-            st.markdown(f"**Betting Odds:** {odds}")
-            answers = []
-            for title, options in questions.items():
-                key = f"{fight_title}: {title}"
-                if title == 'Method of Victory':
-                    method = st.selectbox(title, options, key=key)
-                    answers.append((fight_title, title, method))
-                    # Automatically assign "Decision" round if method of victory is "Decision"
-                    if method == 'Decision':
-                        answers.append((fight_title, 'Round Prediction', 'Decision'))
-                    else:
-                        round_prediction = st.selectbox('Round Prediction', questions['Round Prediction'], key=key+'_round')
-                        answers.append((fight_title, 'Round Prediction', round_prediction))
-                elif title != 'Round Prediction':  # Skip round prediction if already handled
-                    answer = st.selectbox(title, options, key=key)
-                    answers.append((fight_title, title, answer))
+        def questions_form(fight_title, questions, image_fighter_1, image_fighter_2):
+            st.markdown(f"### {fight_title}")
+        
+            # Create three columns
+            col1, col2, col3 = st.columns([1, 2, 1])
+        
+            # Display the images in the first and third columns
+            with col1:
+                st.image(image_fighter_1, caption='Fighter 1')
+        
+            with col3:
+                st.image(image_fighter_2, caption='Fighter 2')
+        
+            # Use the second column for the title, betting odds, and questions
+            with col2:
+                st.markdown(f"**Betting Odds:** {fetch_betting_odds(fight_title)}")
+                answers = []
+                for title, options in questions.items():
+                    key = f"{fight_title}: {title}"
+                    if title == 'Method of Victory':
+                        method = st.selectbox(title, options, key=key)
+                        answers.append((fight_title, title, method))
+                        # Automatically assign "Decision" round if method is "Decision"
+                        if method == 'Decision':
+                            answers.append((fight_title, 'Round Prediction', 'Decision'))
+                        else:
+                            round_prediction = st.selectbox('Round Prediction', questions['Round Prediction'], key=key+'_round')
+                            answers.append((fight_title, 'Round Prediction', round_prediction))
+                    elif title != 'Round Prediction':  # Skip round prediction if already handled
+                        answer = st.selectbox(title, options, key=key)
+                        answers.append((fight_title, title, answer))
+        
             return answers
+        # Function to display questions for each fight
+        # def questions_form(fight_title, questions, image):
+        #     st.subheader(fight_title)
+        #     st.image(image)
+        #     # Fetch and display betting odds
+        #     odds = fetch_betting_odds(fight_title)
+        #     st.markdown(f"**Betting Odds:** {odds}")
+        #     answers = []
+        #     for title, options in questions.items():
+        #         key = f"{fight_title}: {title}"
+        #         if title == 'Method of Victory':
+        #             method = st.selectbox(title, options, key=key)
+        #             answers.append((fight_title, title, method))
+        #             # Automatically assign "Decision" round if method of victory is "Decision"
+        #             if method == 'Decision':
+        #                 answers.append((fight_title, 'Round Prediction', 'Decision'))
+        #             else:
+        #                 round_prediction = st.selectbox('Round Prediction', questions['Round Prediction'], key=key+'_round')
+        #                 answers.append((fight_title, 'Round Prediction', round_prediction))
+        #         elif title != 'Round Prediction':  # Skip round prediction if already handled
+        #             answer = st.selectbox(title, options, key=key)
+        #             answers.append((fight_title, title, answer))
+        #     return answers
 
         # Collect user predictions for each fight
         all_answers = []
@@ -237,7 +269,7 @@ def main_app(username, data):
             "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
             "Round Prediction": ["Round 1", "Round 2", "Round 3", "Round 4", "Round 5"],
         }
-        all_answers.extend(questions_form("Sean Strickland vs Dricus Du Plessis", fight1_questions, fights_questions["Sean Strickland vs Dricus Du Plessis"]['image']))
+        all_answers.extend(questions_form("Sean Strickland vs Dricus Du Plessis", fight1_questions, fights_questions["Sean Strickland vs Dricus Du Plessis"]['fighter_1_image'],fights_questions["Sean Strickland vs Dricus Du Plessis"]['fighter_2_image']))
 
         # Fight 2
         fight2_questions = {
@@ -245,7 +277,7 @@ def main_app(username, data):
             "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
             "Round Prediction": ["Round 1", "Round 2", "Round 3", "Round 4", "Round 5"],
         }
-        all_answers.extend(questions_form("Raquel Pennington vs Mayra Bueno Silva", fight2_questions, fights_questions["Raquel Pennington vs Mayra Bueno Silva"]['image']))
+        all_answers.extend(questions_form("Raquel Pennington vs Mayra Bueno Silva", fight2_questions, fights_questions["Raquel Pennington vs Mayra Bueno Silva"]['fighter_1_image'], fights_questions["Raquel Pennington vs Mayra Bueno Silva"]['fighter_2_image']))
 
         # Fight 3
         fight3_questions = {
@@ -253,7 +285,7 @@ def main_app(username, data):
             "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
             "Round Prediction": ["Round 1", "Round 2", "Round 3"],
         }
-        all_answers.extend(questions_form("Neil Magny vs Mike Malott", fight3_questions, fights_questions["Neil Magny vs Mike Malott"]['image']))
+        all_answers.extend(questions_form("Neil Magny vs Mike Malott", fight3_questions, fights_questions["Neil Magny vs Mike Malott"]['fighter_1_image'], fights_questions["Neil Magny vs Mike Malott"]['fighter_2_image']))
 
         # Fight 4
         fight4_questions = {
@@ -261,7 +293,7 @@ def main_app(username, data):
             "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
             "Round Prediction": ["Round 1", "Round 2", "Round 3"],
         }
-        all_answers.extend(questions_form("Chris Curtis vs Marc-André Barriault", fight4_questions, fights_questions["Chris Curtis vs Marc-André Barriault"]['image']))
+        all_answers.extend(questions_form("Chris Curtis vs Marc-André Barriault", fight4_questions, fights_questions["Chris Curtis vs Marc-André Barriault"]['fighter_1_image'], fights_questions["Chris Curtis vs Marc-André Barriault"]['fighter_2_image']))
 
         # Fight 5
         fight5_questions = {
@@ -269,7 +301,7 @@ def main_app(username, data):
             "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
             "Round Prediction": ["Round 1", "Round 2", "Round 3"],
         }
-        all_answers.extend(questions_form("Arnold Allen vs Movsar Evloev", fight5_questions, fights_questions["Arnold Allen vs Movsar Evloev"]['image']))
+        all_answers.extend(questions_form("Arnold Allen vs Movsar Evloev", fight5_questions, fights_questions["Arnold Allen vs Movsar Evloev"]['fighter_1_image'], fights_questions["Arnold Allen vs Movsar Evloev"]['fighter_2_image']))
 
         if st.button('Submit Predictions'):
             # Save user predictions to the data DataFrame and CSV file
