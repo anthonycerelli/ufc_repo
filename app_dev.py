@@ -278,14 +278,14 @@ def main_app(username, data, fight_data):
         if st.button('Submit Predictions'):
             # Save user predictions to the data DataFrame and CSV file
             for fight, question, answer in all_answers:
-                record = {'Name': name, 'Photo': 'photo_path_here', 'Fight': fight, 'Question': question, 'Answer': answer, 'Points': 0.0}
+                record = {'Name': username, 'Photo': 'photo_path_here', 'Fight': fight, 'Question': question, 'Answer': answer, 'Points': 0.0}
                 data = data.append(record, ignore_index=True)
                 data_airtable.insert(record)
             st.success('Predictions submitted!')
 
         # Display user's total points
         if username in data['Name'].values:
-                total_points = data[data['Name'] == name]['Points'].sum()
+                total_points = data[data['Name'] == username]['Points'].sum()
                 st.write(f"Your total points: {total_points}")
     
     # Update the section where you render the chart
@@ -333,17 +333,11 @@ def main_app(username, data, fight_data):
                 title_font=dict(size=22, color="RebeccaPurple", family="Verdana, sans-serif")
             )
         
-            # Positioning the text on the bars
-            fig.update_traces(texttemplate='%{text:.2s}', textposition='outside')
-            
-            # Toggle for Live Mode
-            live_mode = st.checkbox('Live Mode')
-            if live_mode:
-                fig.update_layout(autosize=True, height=600)  # Larger chart for live mode
-                fig.update_traces(hoverinfo='all', hoverlabel=dict(bgcolor="white", font_size=16, font_family="Rockwell"))
-                st.plotly_chart(fig, use_container_width=True)
-            else:
-                st.plotly_chart(fig, use_container_width=True)
+            # Updates for live scoreboard
+            fig.update_layout(autosize=True, height=600)  # Larger chart for live mode
+            fig.update_traces(hoverinfo='all', hoverlabel=dict(bgcolor="white", font_size=16, font_family="Rockwell"))
+            st.plotly_chart(fig, use_container_width=True)
+           
         
         create_scoreboard()
             
