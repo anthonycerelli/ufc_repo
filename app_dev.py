@@ -180,15 +180,7 @@ def main_app(username, data):
         tab1, tab2, tab3 = st.tabs(["Make Predictions", "Game Leaderboard", "Admin"])
     else:
         tab1, tab2 = st.tabs(["Make Predictions", "Game Leaderboard"])
-    # Profile Photo Upload
-    uploaded_file = st.file_uploader("Choose a profile picture", type=["jpg", "jpeg", "png"])
-    if uploaded_file is not None:     
-        # Upload to Cloudinary
-        upload_response = upload_image_to_cloudinary(uploaded_file)
-        if upload_response is not None:
-            image_url = upload_response['url']
-            # Here you can store the image_url to Airtable
-            update_user_profile(username, image_url)
+        
     # Tab 1 data
     with tab1:
         # Explanation of the points system
@@ -241,7 +233,8 @@ def main_app(username, data):
             "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
             "Round Prediction": ["Round 1", "Round 2", "Round 3", "Round 4", "Round 5"],
         }
-        all_answers.extend(questions_form("Sean Strickland vs Dricus Du Plessis", fight1_questions, fights_questions["Sean Strickland vs Dricus Du Plessis"]['fighter_1_image'],fights_questions["Sean Strickland vs Dricus Du Plessis"]['fighter_2_image']))
+        fight_questions_temp = fights_questions["Sean Strickland vs Dricus Du Plessis"]
+        all_answers.extend(questions_form("Sean Strickland vs Dricus Du Plessis", fight1_questions, fight_questions_temp['fighter_1_image'],fight_questions_temp['fighter_2_image'], fight_questions_temp['Winner'][0], fight_questions_temp['Winner'][1]))
 
         # Fight 2
         fight2_questions = {
@@ -249,7 +242,8 @@ def main_app(username, data):
             "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
             "Round Prediction": ["Round 1", "Round 2", "Round 3", "Round 4", "Round 5"],
         }
-        all_answers.extend(questions_form("Raquel Pennington vs Mayra Bueno Silva", fight2_questions, fights_questions["Raquel Pennington vs Mayra Bueno Silva"]['fighter_1_image'], fights_questions["Raquel Pennington vs Mayra Bueno Silva"]['fighter_2_image']))
+        fight_questions_temp = fights_questions["Raquel Pennington vs Mayra Bueno Silva"]
+        all_answers.extend(questions_form("Raquel Pennington vs Mayra Bueno Silva", fight2_questions, fight_questions_temp['fighter_1_image'],fight_questions_temp['fighter_2_image'], fight_questions_temp['Winner'][0], fight_questions_temp['Winner'][1]))
 
         # Fight 3
         fight3_questions = {
@@ -257,7 +251,8 @@ def main_app(username, data):
             "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
             "Round Prediction": ["Round 1", "Round 2", "Round 3"],
         }
-        all_answers.extend(questions_form("Neil Magny vs Mike Malott", fight3_questions, fights_questions["Neil Magny vs Mike Malott"]['fighter_1_image'], fights_questions["Neil Magny vs Mike Malott"]['fighter_2_image']))
+        fight_questions_temp = fights_questions["Neil Magny vs Mike Malott"]
+        all_answers.extend(questions_form("Neil Magny vs Mike Malott", fight3_questions, fight_questions_temp['fighter_1_image'],fight_questions_temp['fighter_2_image'], fight_questions_temp['Winner'][0], fight_questions_temp['Winner'][1]))
 
         # Fight 4
         fight4_questions = {
@@ -265,7 +260,8 @@ def main_app(username, data):
             "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
             "Round Prediction": ["Round 1", "Round 2", "Round 3"],
         }
-        all_answers.extend(questions_form("Chris Curtis vs Marc-André Barriault", fight4_questions, fights_questions["Chris Curtis vs Marc-André Barriault"]['fighter_1_image'], fights_questions["Chris Curtis vs Marc-André Barriault"]['fighter_2_image']))
+        fight_questions_temp = fights_questions["Chris Curtis vs Marc-André Barriault"]
+        all_answers.extend(questions_form("Chris Curtis vs Marc-André Barriault", fight4_questions, fight_questions_temp['fighter_1_image'],fight_questions_temp['fighter_2_image'], fight_questions_temp['Winner'][0], fight_questions_temp['Winner'][1]))
 
         # Fight 5
         fight5_questions = {
@@ -273,7 +269,8 @@ def main_app(username, data):
             "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
             "Round Prediction": ["Round 1", "Round 2", "Round 3"],
         }
-        all_answers.extend(questions_form("Arnold Allen vs Movsar Evloev", fight5_questions, fights_questions["Arnold Allen vs Movsar Evloev"]['fighter_1_image'], fights_questions["Arnold Allen vs Movsar Evloev"]['fighter_2_image']))
+        fight_questions_temp = fights_questions["Arnold Allen vs Movsar Evloev"]
+        all_answers.extend(questions_form("Arnold Allen vs Movsar Evloev", fight5_questions, fight_questions_temp['fighter_1_image'],fight_questions_temp['fighter_2_image'], fight_questions_temp['Winner'][0], fight_questions_temp['Winner'][1]))
 
         if st.button('Submit Predictions'):
             # Save user predictions to the data DataFrame and CSV file
@@ -291,6 +288,16 @@ def main_app(username, data):
     # Update the section where you render the chart
     with tab2:
         st.write('Players Points:')
+
+        # Profile Photo Upload
+        uploaded_file = st.file_uploader("Choose a profile picture", type=["jpg", "jpeg", "png"])
+        if uploaded_file is not None:     
+            # Upload to Cloudinary
+            upload_response = upload_image_to_cloudinary(uploaded_file)
+            if upload_response is not None:
+                image_url = upload_response['url']
+                # Here you can store the image_url to Airtable
+                update_user_profile(username, image_url)
         
         # Fetch data and sort
         columns = ['Name', 'Points'] 
@@ -298,30 +305,44 @@ def main_app(username, data):
         players_points = get_player_points(data)
         players_points_sorted = players_points.sort_values(by='Points', ascending=False)
     
-        # Create a bar chart using plotly with improved aesthetics
-        fig = px.bar(players_points_sorted, x='Name', y='Points',
-                     title='Player Rankings',
-                     labels={'Points': 'Total Points'},
-                     color='Points',
-                     color_continuous_scale=px.colors.sequential.Plasma) # Updated color scheme
-    
-        # Enhance layout
-        fig.update_layout(
-            plot_bgcolor='rgba(0, 0, 0, 0)', # Transparent background
-            xaxis_title="",
-            yaxis_title="Total Points",
-            showlegend=False
-        )
-        fig.update_xaxes(tickangle=-45)
-    
-        # Toggle for Live Mode
-        live_mode = st.checkbox('Live Mode')
-        if live_mode:
-            fig.update_layout(autosize=True, height=600)  # Larger chart for live mode
-            fig.update_traces(hoverinfo='all', hoverlabel=dict(bgcolor="white", font_size=16, font_family="Rockwell"))
-            st.plotly_chart(fig, use_container_width=True)
-        else:
-            st.plotly_chart(fig, use_container_width=True)
+        def create_scoreboard():
+            # Fetch data and sort
+            columns = ['Name', 'Points']
+            data = fetch_data(data_airtable, columns)
+            players_points = get_player_points(data)
+            players_points_sorted = players_points.sort_values(by='Points', ascending=False)
+        
+            # Create a bar chart using plotly with scoreboard aesthetics
+            fig = px.bar(players_points_sorted, x='Name', y='Points',
+                         title='Player Rankings',
+                         labels={'Points': 'Total Points'},
+                         color='Points',
+                         text='Points',
+                         color_continuous_scale=px.colors.sequential.Viridis) # Aesthetic color scheme
+        
+            # Customize the layout to make it look like a scoreboard
+            fig.update_layout(
+                plot_bgcolor='rgba(0, 0, 0, 0)',  # Transparent background
+                xaxis_title="",
+                yaxis_title="Total Points",
+                showlegend=False,
+                font=dict(family="Courier New, monospace", size=14, color="RebeccaPurple"),
+                title_font=dict(size=22, color="RebeccaPurple", family="Verdana, sans-serif")
+            )
+        
+            # Positioning the text on the bars
+            fig.update_traces(texttemplate='%{text:.2s}', textposition='outside')
+            
+            # Toggle for Live Mode
+            live_mode = st.checkbox('Live Mode')
+            if live_mode:
+                fig.update_layout(autosize=True, height=600)  # Larger chart for live mode
+                fig.update_traces(hoverinfo='all', hoverlabel=dict(bgcolor="white", font_size=16, font_family="Rockwell"))
+                st.plotly_chart(fig, use_container_width=True)
+            else:
+                st.plotly_chart(fig, use_container_width=True)
+        
+        create_scoreboard()
             
     if username == 'anthony':
         with tab3:
