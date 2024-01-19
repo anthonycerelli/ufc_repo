@@ -416,6 +416,7 @@ def login_page(login_airtable=login_airtable):
                     
                     # Log the user in after signing up
                     st.session_state['logged_in'] = True
+                    st.session_state['username'] = username
                     st.experimental_rerun()
 
 # Main script execution
