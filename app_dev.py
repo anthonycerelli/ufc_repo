@@ -197,17 +197,17 @@ def main_app(username, data, fight_data):
             st.markdown(f"### {fight_title}")
         
             # Create three columns
-            col1, col2, col3 = st.columns([1, 2, 1])
+            cols = st.columns([1, 2, 1])
         
             # Display the images in the first and third columns
-            with col1:
+            with cols[0]:
                 st.image(image_fighter_1, caption=fighter_1)
         
-            with col3:
+            with cols[2]:
                 st.image(image_fighter_2, caption=fighter_2)
         
             # Use the second column for the title, betting odds, and questions
-            with col2:
+            with cols[1]:
                 # st.markdown(f"**Betting Odds:** {fetch_betting_odds(fight_title)}")
                 answers = []
                 for title, options in questions.items():
@@ -439,7 +439,7 @@ def login_page(login_airtable=login_airtable):
                     # Log the user in after signing up
                     st.session_state['logged_in'] = True
                     st.session_state['username'] = username
-                    st.experimental_rerun()
+                    st.rerun()
 
 # Main script execution
 if st.session_state['logged_in']:
