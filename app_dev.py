@@ -176,7 +176,7 @@ def update_user_profile(username, image_url):
     else:
         st.error("User not found.")
 
-def main_app(username, data, fight_data):
+def main_app(username, data, fight_data, login_airtable):
     st.title('UFC 297 -- "Fantasy" Championship')
     # Tabs
     if username == 'anthony':
@@ -307,6 +307,32 @@ def main_app(username, data, fight_data):
         data = fetch_data(data_airtable, columns)
         players_points = get_player_points(data)
         players_points_sorted = players_points.sort_values(by='Points', ascending=False)
+
+        def create_leaderboard_widget(data, login_airtable):
+            # Sort the players based on their scores
+            sorted_data = data.sort_values(by='Points', ascending=False).head(3)
+        
+            # Create a container for the leaderboard
+            st.write("Leaderboard")
+            leaderboard_container = st.container()
+        
+            # Iterate over the top 3 players and display their details
+            for index, row in sorted_data.iterrows():
+                player_name = row['Name']
+                player_score = row['Points']
+        
+                # Fetch the profile photo URL from the login_airtable
+                player_record = login_airtable.search('username', player_name)
+                if player_record:
+                    profile_photo_url = player_record[0]['fields'].get('profile_photo', '')
+        
+                with leaderboard_container:
+                    # Display each player's details
+                    col1, col2 = st.columns([1, 3])
+                    with col1:
+                        st.image(profile_photo_url, width=50)  # Adjust width as needed
+                    with col2:
+                        st.markdown(f"**{player_name}**: {player_score} points")
     
         def create_scoreboard():
             # Fetch data and sort
@@ -340,6 +366,7 @@ def main_app(username, data, fight_data):
            
         
         create_scoreboard()
+        create_leaderboard_widget(players_points, login_airtable)
             
     if username == 'anthony':
         with tab3:
@@ -443,6 +470,6 @@ def login_page(login_airtable=login_airtable):
 
 # Main script execution
 if st.session_state['logged_in']:
-    main_app(st.session_state['username'], data, fight_data)
+    main_app(st.session_state['username'], data, fight_data, login_airtable)
 else:
     login_page()
