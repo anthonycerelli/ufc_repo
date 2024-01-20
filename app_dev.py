@@ -291,6 +291,9 @@ def main_app(username, data, fight_data, login_airtable):
     # Update the section where you render the chart
     with tab2:
         st.write('Players Points:')
+        # Refresh button
+        if st.button('Refresh Scoreboard'):
+            st.rerun()
 
         # Profile Photo Upload
         uploaded_file = st.file_uploader("Choose a profile picture", type=["jpg", "jpeg", "png"])
