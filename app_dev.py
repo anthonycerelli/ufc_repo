@@ -297,7 +297,7 @@ def main_app(username, data, fight_data, login_airtable):
 
         # Profile Photo Upload
         uploaded_file = st.file_uploader("Choose a profile picture", type=["jpg", "jpeg", "png"])
-        if uploaded_file is not None:     
+        if uploaded_file is not None:
             # Upload to Cloudinary
             upload_response = upload_image_to_cloudinary(uploaded_file)
             if upload_response is not None:
@@ -306,12 +306,14 @@ def main_app(username, data, fight_data, login_airtable):
                 update_user_profile(username, image_url)
         
         # Fetch data and sort
-        columns = ['Name', 'Points'] 
+        columns = ['Name', 'Points']
         data = fetch_data(data_airtable, columns)
         players_points = get_player_points(data)
         players_points_sorted = players_points.sort_values(by='Points', ascending=False)
 
         def create_leaderboard_widget(data, login_airtable):
+            placeholder_image_url = "https://www.essentiallysports.com/wp-content/uploads/Angry-Dana.png"
+            
             # Sort the players based on their scores
             sorted_data = data.sort_values(by='Points', ascending=False).head(3)
         
@@ -326,9 +328,12 @@ def main_app(username, data, fight_data, login_airtable):
         
                 # Fetch the profile photo URL from the login_airtable
                 player_record = login_airtable.search('username', player_name)
-                if player_record:
-                    profile_photo_url = player_record[0]['fields'].get('profile_photo', '')
-        
+                # Check if they have profile photo
+                if player_record and player_record[0]['fields'].get('profile_photo'):
+                    profile_photo_url = player_record[0]['fields'].get('profile_photo')
+                else:
+                    profile_photo_url = placeholder_image_url 
+                
                 with leaderboard_container:
                     # Display each player's details
                     col1, col2 = st.columns([1, 3])
@@ -450,7 +455,7 @@ def login_page(login_airtable=login_airtable):
             if inputs_are_valid(username, password) and check_credentials(username, password):
                 st.session_state['logged_in'] = True
                 st.session_state['username'] = username
-                st.experimental_rerun()
+                st.rerun()
             elif not check_credentials(username, password):
                 st.error("Incorrect username or password")
 
