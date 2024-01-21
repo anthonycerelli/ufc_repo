@@ -333,7 +333,7 @@ def main_app(username, data, fight_data, login_airtable):
                     # Display each player's details
                     col1, col2 = st.columns([1, 3])
                     with col1:
-                        st.image(profile_photo_url, width=50)  # Adjust width as needed
+                        st.image(profile_photo_url, width=200)  # Adjust width as needed
                     with col2:
                         st.markdown(f"**{player_name}**: {player_score} points")
     
