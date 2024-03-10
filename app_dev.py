@@ -90,36 +90,36 @@ answers = pd.DataFrame(answers_records_fields, columns=answers_columns)
 # Questions and options
 fights_questions = {
     fight_data[0]: {
-        "fighter_1_image": "https://dmxg5wxfqgb4u.cloudfront.net/styles/athlete_bio_full_body/s3/2023-09/STRICKLAND_SEAN_L_BELTMOCK.png?itok=QLnBsSSa",
-        "fighter_2_image": "https://dmxg5wxfqgb4u.cloudfront.net/styles/athlete_bio_full_body/s3/2023-07/DU_PLESSUS_DRICUS_L_07-08.png?itok=o3g5Swus",
+        "fighter_1_image": "https://dmxg5wxfqgb4u.cloudfront.net/styles/athlete_bio_full_body/s3/2023-08/OMALLEY_SEAN_L_BELTMOCK.png?itok=T1J6X_70",
+        "fighter_2_image": "https://dmxg5wxfqgb4u.cloudfront.net/styles/athlete_bio_full_body/s3/2023-08/VERA_MARLON_L_08-19.png?itok=yc6oFbZQ",
         "Winner of Main Event": [fight_data[0].split(' vs ')[0].rstrip(), fight_data[0].split(' vs ')[1].lstrip(), "Draw"],
         "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
         "Round Prediction": ["Round 1", "Round 2", "Round 3", "Round 4", "Round 5"],
     },
     fight_data[1]: {
-        "fighter_1_image": "https://dmxg5wxfqgb4u.cloudfront.net/styles/athlete_bio_full_body/s3/2023-02/PENNINGTON_RAQUEL_L_01-14.png?itok=ygnaP1S3",
-        "fighter_2_image": "https://dmxg5wxfqgb4u.cloudfront.net/styles/athlete_bio_full_body/s3/2023-02/BUENO_SILVA_MAYRA_L_02-18.png?itok=w5Uxw6V5",
+        "fighter_1_image": "https://dmxg5wxfqgb4u.cloudfront.net/styles/athlete_bio_full_body/s3/2024-03/POIRIER_DUSTIN_L_03-09.png?itok=DXIlLXrO",
+        "fighter_2_image": "https://dmxg5wxfqgb4u.cloudfront.net/styles/athlete_bio_full_body/s3/2023-08/SAINT_DENIS_BENOIT_L_09-02.png?itok=RzY5lfYg",
         "Winner of Co-Main Event": [fight_data[1].split(' vs ')[0].rstrip(), fight_data[1].split(' vs ')[1].lstrip(), "Draw"],
         "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
         "Round Prediction": ["Round 1", "Round 2", "Round 3", "Round 4", "Round 5"],
     },
     fight_data[2]: {
-        "fighter_1_image": "https://dmxg5wxfqgb4u.cloudfront.net/styles/athlete_bio_full_body/s3/2023-06/MAGNY_NEIL_L_06-24.png?itok=tXrZ7OcK",
-        "fighter_2_image": "https://dmxg5wxfqgb4u.cloudfront.net/styles/athlete_bio_full_body/s3/2023-06/MALOTT_MIKE_L_06-10.png?itok=I6d0Jn2U",
+        "fighter_1_image": "https://dmxg5wxfqgb4u.cloudfront.net/styles/athlete_bio_full_body/s3/2023-09/HOLLAND_KEVIN_L_09-16.png?itok=h_BrSauQ",
+        "fighter_2_image": "https://dmxg5wxfqgb4u.cloudfront.net/styles/athlete_bio_full_body/s3/2024-02/PAGE_MICHAEL_L_01-28.png?itok=xIbj-Caf",
         "Winner": [fight_data[2].split(' vs ')[0].rstrip(), fight_data[2].split(' vs ')[1].lstrip(), "Draw"],
         "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
         "Round Prediction": ["Round 1", "Round 2", "Round 3"],
     },
     fight_data[3]: {
-        "fighter_1_image": "https://dmxg5wxfqgb4u.cloudfront.net/styles/athlete_bio_full_body/s3/2023-06/CURTIS_CHRIS_L_06-10.png?itok=1J6fb1lV",
-        "fighter_2_image": "https://dmxg5wxfqgb4u.cloudfront.net/styles/athlete_bio_full_body/s3/2023-06/BARRIAULT_MARC-ANDRE_L_06-10.png?itok=A2cIJUsS",
+        "fighter_1_image": "https://dmxg5wxfqgb4u.cloudfront.net/styles/athlete_bio_full_body/s3/2024-03/BURNS_GILBERT_L_03-09.png?itok=I09h48cV",
+        "fighter_2_image": "https://dmxg5wxfqgb4u.cloudfront.net/styles/athlete_bio_full_body/s3/2024-01/DELLA_MADDALENA_JACK_L_09-16.png?itok=bRMFEb28",
         "Winner": [fight_data[3].split(' vs ')[0].rstrip(), fight_data[3].split(' vs ')[1].lstrip(), "Draw"],
         "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
         "Round Prediction": ["Round 1", "Round 2", "Round 3"],
     },
     fight_data[4]: {
-        "fighter_1_image": "https://dmxg5wxfqgb4u.cloudfront.net/styles/athlete_bio_full_body/s3/2022-11/ALLEN_ARNOLD_L_10-29.png?itok=ikJBEURv",
-        "fighter_2_image": "https://dmxg5wxfqgb4u.cloudfront.net/styles/athlete_bio_full_body/s3/2023-05/EVLOEV_MOVSAR_L_05-06.png?itok=G5cVdlSj",
+        "fighter_1_image": "https://dmxg5wxfqgb4u.cloudfront.net/styles/athlete_bio_full_body/s3/2023-03/YAN_PETR_L_03-11.png?itok=YZH4Zzjg",
+        "fighter_2_image": "https://dmxg5wxfqgb4u.cloudfront.net/styles/athlete_bio_full_body/s3/2023-12/SONG_YADONG_L_12-09.png?itok=eF2N6xlb",
         "Winner": [fight_data[4].split(' vs ')[0].rstrip(), fight_data[4].split(' vs ')[1].lstrip(), "Draw"],
         "Method of Victory": ["KO/TKO", "Submission", "Decision", "Other"],
         "Round Prediction": ["Round 1", "Round 2", "Round 3"],
@@ -179,7 +179,7 @@ def update_user_profile(username, image_url):
 def main_app(username, data, fight_data, login_airtable):
     st.title('UFC 299 -- "Fantasy" Championship')
     # Tabs
-    if username == 'anthony':
+    if username == 'anthony' or username == 'Matt':
         tab1, tab2, tab3 = st.tabs(["Make Predictions", "Game Leaderboard", "Admin"])
     else:
         tab1, tab2 = st.tabs(["Make Predictions", "Game Leaderboard"])
