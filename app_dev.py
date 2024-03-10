@@ -9,7 +9,7 @@ import cloudinary
 import cloudinary.uploader
 
 # global variable fight_data -- 5 names of fights
-fight_data = ["Sean Strickland vs Dricus Du Plessis", "Raquel Pennington vs Mayra Bueno Silva", "Neil Magny vs Mike Malott", "Chris Curtis vs Marc-André Barriault", "Arnold Allen vs Movsar Evloev"]
+fight_data = ["Sean O'Malley vs Marlon Vera", "Dustin Poirier vs Benoit Saint-Denis", "Kevin Holland vs Michael Page", "Gilbert Burns vs Jack Della Maddalena", "Petr Yan vs Song Yadong"]
 
 # Define a function to fetch and return data from Airtable
 def fetch_data(airtable_instance, columns):
@@ -32,11 +32,11 @@ def fetch_betting_odds(fight_title):
     # This function should fetch betting odds from your data source.
     # For demonstration, I'm returning dummy data. Replace this with your actual data fetching logic.
     odds = {
-        fight_data[0]: "Sean Strickland (-130) favourite",
-        fight_data[1]: "Mayra Bueno Silva (-166) favourite",
-        fight_data[2]: "Mike Malott (-250) favourite",
-        fight_data[3]: "Chris Curtis (-166) favourite",
-        fight_data[4]: "Movsar Evloev (-166) favourite"
+        fight_data[0]: "Sean O'Malley (-218) favourite",
+        fight_data[1]: "Benoit Saint-Denis (-170) favourite",
+        fight_data[2]: "No favourite",
+        fight_data[3]: "Jack Della Maddalena (-120) favourite",
+        fight_data[4]: "Petr Yan (-135) favourite"
     }
     return odds.get(fight_title, "Odds not available")
 
@@ -180,9 +180,15 @@ def main_app(username, data, fight_data, login_airtable):
     st.title('UFC 297 -- "Fantasy" Championship')
     # Tabs
     if username == 'anthony':
-        tab1, tab2, tab3 = st.tabs(["Make Predictions", "Game Leaderboard", "Admin"])
+    tab1, tab2, tab3, tab4 = st.tabs(["Make Predictions", "Game Leaderboard", "Admin", "Wins"])
     else:
-        tab1, tab2 = st.tabs(["Make Predictions", "Game Leaderboard"])
+        tab1, tab2, tab4 = st.tabs(["Make Predictions", "Game Leaderboard", "Wins"])
+
+def fetch_wins_data(airtable_instance):
+    records = airtable_instance.get_all(fields=['username', 'wins'])  # Assuming 'wins' is stored in a field
+    wins_data = [{'username': record['fields'].get('username'), 'wins': len(record['fields'].get('wins', []))} for record in records]
+    
+    return pd.DataFrame(wins_data)
         
     # Tab 1 data
     with tab1:
@@ -375,6 +381,16 @@ def main_app(username, data, fight_data, login_airtable):
         
         create_scoreboard()
         create_leaderboard_widget(players_points, login_airtable)
+
+    with tab4:
+        st.header("Wins Leaderboard")
+        wins_data = fetch_wins_data(login_airtable)
+        players_with_wins = wins_data[wins_data['wins'] > 1].sort_values(by='wins', ascending=False)
+        if not players_with_wins.empty:
+            for index, row in players_with_wins.iterrows():
+                st.write(f"{row['username']}: {row['wins']} wins")
+        else:
+            st.write("No players with more than 1 win yet.")
             
     if username == 'anthony':
         with tab3:
