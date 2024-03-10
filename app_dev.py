@@ -177,18 +177,12 @@ def update_user_profile(username, image_url):
         st.error("User not found.")
 
 def main_app(username, data, fight_data, login_airtable):
-    st.title('UFC 299 -- "Fantasy" Championship')
+    st.title('UFC 297 -- "Fantasy" Championship')
     # Tabs
     if username == 'anthony':
-        tab1, tab2, tab3, tab4 = st.tabs(["Make Predictions", "Game Leaderboard", "Admin", "Wins"])
+        tab1, tab2, tab3 = st.tabs(["Make Predictions", "Game Leaderboard", "Admin"])
     else:
-        tab1, tab2, tab4 = st.tabs(["Make Predictions", "Game Leaderboard", "Wins"])
-
-def fetch_wins_data(airtable_instance):
-    records = airtable_instance.get_all(fields=['username', 'wins'])  # Assuming 'wins' is stored in a field
-    wins_data = [{'username': record['fields'].get('username'), 'wins': len(record['fields'].get('wins', []))} for record in records]
-    
-    return pd.DataFrame(wins_data)
+        tab1, tab2 = st.tabs(["Make Predictions", "Game Leaderboard"])
         
     # Tab 1 data
     with tab1:
@@ -381,19 +375,9 @@ def fetch_wins_data(airtable_instance):
         
         create_scoreboard()
         create_leaderboard_widget(players_points, login_airtable)
-
-    with tab3:
-        st.header("Wins Leaderboard")
-        wins_data = fetch_wins_data(login_airtable)
-        players_with_wins = wins_data[wins_data['wins'] > 1].sort_values(by='wins', ascending=False)
-        if not players_with_wins.empty:
-            for index, row in players_with_wins.iterrows():
-                st.write(f"{row['username']}: {row['wins']} wins")
-        else:
-            st.write("No players with more than 1 win yet.")
             
     if username == 'anthony':
-        with tab4:
+        with tab3:
             # Admin interface for updating correct answers
             st.subheader('Update Correct Answers')
             if not answers.empty:
