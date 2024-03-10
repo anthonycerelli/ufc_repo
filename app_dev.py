@@ -177,7 +177,7 @@ def update_user_profile(username, image_url):
         st.error("User not found.")
 
 def main_app(username, data, fight_data, login_airtable):
-    st.title('UFC 297 -- "Fantasy" Championship')
+    st.title('UFC 299 -- "Fantasy" Championship')
     # Tabs
     if username == 'anthony':
         tab1, tab2, tab3 = st.tabs(["Make Predictions", "Game Leaderboard", "Admin"])
