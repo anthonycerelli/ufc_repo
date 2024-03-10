@@ -180,7 +180,7 @@ def main_app(username, data, fight_data, login_airtable):
     st.title('UFC 297 -- "Fantasy" Championship')
     # Tabs
     if username == 'anthony':
-    tab1, tab2, tab3, tab4 = st.tabs(["Make Predictions", "Game Leaderboard", "Admin", "Wins"])
+        tab1, tab2, tab3, tab4 = st.tabs(["Make Predictions", "Game Leaderboard", "Admin", "Wins"])
     else:
         tab1, tab2, tab4 = st.tabs(["Make Predictions", "Game Leaderboard", "Wins"])
 
